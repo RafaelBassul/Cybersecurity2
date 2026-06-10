@@ -91,6 +91,33 @@
   .b9{border-top:5px solid var(--azul);} .b10{border-top:5px solid var(--ciano);} .b11{border-top:5px solid var(--vermelho);}
   .b14{border-top:5px solid var(--laranja);} .b15{border-top:5px solid var(--roxo);} .b16{border-top:5px solid var(--rosa);}
   .b17{border-top:5px solid var(--teal);} .b18{border-top:5px solid var(--verde);}
+  /* ===== Dark mode ===== */
+  body, section.modulo, .pergunta, .opcao, table, code{transition:background-color .25s, color .25s, border-color .25s;}
+  #tema-btn{width:100%; background:#1b2d44; color:#cdd9e5; border:1px solid #2a3a50; border-radius:8px; padding:8px 10px; cursor:pointer; font-size:.85rem; margin-bottom:12px; font-family:inherit;}
+  #tema-btn:hover{background:#24395a; color:#fff;}
+  body.dark{
+    --bg:#0d1421; --card:#16202f; --ink:#e3eaf3; --muted:#93a4b8; --borda:#2a3a50;
+    --azul:#5ba0ff; --verde:#34c97b; --laranja:#ffa14e; --roxo:#a98aed;
+    --vermelho:#ff7384; --ciano:#3ec4e0; --rosa:#f06eb2; --teal:#3fd9ac;
+  }
+  body.dark section.modulo{box-shadow:0 1px 3px rgba(0,0,0,.4);}
+  body.dark th{background:#0a111d;}
+  body.dark table{background:var(--card);}
+  body.dark tr:nth-child(even) td{background:#1a2636;}
+  body.dark .conceito{background:#152538; border-color:#27466b;}
+  body.dark .analogia{background:#2b2113; border-color:#5d4521;}
+  body.dark .dica{background:#11271b; border-color:#1f4d33;}
+  body.dark .atencao{background:#2c151a; border-color:#5a2630;}
+  body.dark .quiz{background:#1d1a2e; border-color:#3a3458;}
+  body.dark .pergunta{background:#16202f; border-color:#2a3a50;}
+  body.dark .opcao{background:#1b2738; border-color:#2a3a50; color:var(--ink);}
+  body.dark .opcao:hover{background:#22304a; border-color:var(--azul);}
+  body.dark .opcao.certa{background:#143626 !important; border-color:var(--verde) !important;}
+  body.dark .opcao.errada{background:#3a1a20 !important; border-color:var(--vermelho) !important;}
+  body.dark details.explica div{background:#1a2333;}
+  body.dark code{background:#243246; color:#dbe6f5;}
+  body.dark .fluxo .et{background:#1b2d44;}
+  body.dark .mod-tag, body.dark th, body.dark pre.cli, body.dark header.hero{color:#fff;}
   /* Responsivo */
   @media (max-width: 900px){
     .layout{flex-direction:column;}
@@ -114,6 +141,7 @@
 
 <nav id="menu" aria-label="Navegação do guia">
   <h2>📘 Network Security</h2>
+  <button id="tema-btn" type="button">🌙 Modo escuro</button>
   <div class="secao">Início</div>
   <a href="#inicio">Visão geral do guia</a>
   <a href="#mapa">Mapa do conteúdo</a>
@@ -348,13 +376,24 @@
     <tr><td><b>pass</b></td><td>Deixa passar <b>sem manter estado</b></td><td>Só vale em <b>um sentido</b> — o retorno precisa de outra política pass na direção oposta.</td></tr>
   </table></div>
 
-  <h4>Regras para o tráfego em trânsito (resumo prático)</h4>
+  <h4>Regras para o tráfego em trânsito (tabela oficial do curso — seção 10.2)</h4>
+  <div class="tabela-wrap"><table>
+    <tr><th>Interface de origem em zona?</th><th>Interface de destino em zona?</th><th>Zone-pair existe?</th><th>Política existe?</th><th>Resultado</th></tr>
+    <tr><td>Não</td><td>Não</td><td>N/D</td><td>N/D</td><td><b>PASSA</b></td></tr>
+    <tr><td><b>Sim</b></td><td>Não</td><td>N/D</td><td>N/D</td><td><b>DROP</b></td></tr>
+    <tr><td>Não</td><td><b>Sim</b></td><td>N/D</td><td>N/D</td><td><b>DROP</b></td></tr>
+    <tr><td>Sim (mesma zona)</td><td>Sim (mesma zona)</td><td>N/D</td><td>N/D</td><td><b>PASSA</b></td></tr>
+    <tr><td>Sim (privada)</td><td>Sim (pública)</td><td><b>Não</b></td><td>N/D</td><td><b>DROP</b></td></tr>
+    <tr><td>Sim (privada)</td><td>Sim (pública)</td><td>Sim</td><td><b>Não</b></td><td><b>PASSA</b></td></tr>
+    <tr><td>Sim (privada)</td><td>Sim (pública)</td><td>Sim</td><td><b>Sim</b></td><td><b>INSPECT</b> (a política decide)</td></tr>
+  </table></div>
+  <div class="analogia"><b class="titulo">🛂 Analogia: zonas = países</b>
+  Mesma zona = mesmo país (circulação livre). Zonas diferentes <b>sem zone-pair</b> = fronteira fechada (drop). Zone-pair <b>sem política</b> = cancela aberta sem fiscal (passa). Zone-pair <b>com política</b> = o fiscal aplica as regras do visto (inspect/drop/pass). E interfaces fora de qualquer zona não podem cruzar com quem está dentro do "sistema de fronteiras" (drop).</div>
+  <div class="atencao"><b class="titulo">⚠️ Pegadinhas desta tabela (cai em prova!)</b>
   <ul>
-    <li>Se <b>nenhuma das interfaces</b> (entrada e saída) é membro de zona ➜ o tráfego <b>passa</b> normalmente.</li>
-    <li>Se <b>apenas uma</b> das interfaces está em uma zona ➜ o tráfego é <b>descartado</b>.</li>
-    <li>Se as duas interfaces estão em zonas <b>diferentes</b> ➜ só passa se existir um <b>par de zonas com política que permita</b> (inspect/pass).</li>
-    <li>Se as duas interfaces estão na <b>mesma zona</b> ➜ o tráfego <b>passa</b>.</li>
-  </ul>
+    <li><b>Sem</b> zone-pair entre zonas diferentes ➜ <b>DROP</b>; mas zone-pair criado <b>sem política</b> aplicada ➜ <b>PASSA</b>. Compare as linhas 5 e 6!</li>
+    <li><b>Uma</b> interface em zona e a outra fora ➜ <b>DROP</b> (linhas 2 e 3); <b>nenhuma</b> em zona ➜ <b>PASSA</b> (linha 1).</li>
+  </ul></div>
 
   <div class="conceito"><b class="titulo">📌 A "self zone"</b>
   A <b>zona self</b> é o próprio roteador: todo tráfego <b>destinado ao roteador</b> (ex.: SSH, OSPF, ping para a interface) ou <b>gerado por ele</b> pertence à self zone. Por padrão, esse tráfego é <b>permitido</b> — mas você pode criar políticas zona ➜ self para restringi-lo (ex.: só permitir SSH de gerência).</div>
@@ -1050,6 +1089,17 @@ const obs = new IntersectionObserver(entries => {
   });
 }, {rootMargin:'-30% 0px -60% 0px'});
 secoes.forEach(s => obs.observe(s));
+// Dark mode
+const temaBtn = document.getElementById('tema-btn');
+function setTema(escuro){
+  document.body.classList.toggle('dark', escuro);
+  temaBtn.textContent = escuro ? '☀️ Modo claro' : '🌙 Modo escuro';
+  try{ localStorage.setItem('tema', escuro ? 'dark' : 'light'); }catch(e){}
+}
+let temaSalvo = null;
+try{ temaSalvo = localStorage.getItem('tema'); }catch(e){}
+setTema(temaSalvo ? temaSalvo === 'dark' : window.matchMedia('(prefers-color-scheme: dark)').matches);
+temaBtn.addEventListener('click', () => setTema(!document.body.classList.contains('dark')));
 // Quiz
 function resp(btn, certa){
   const irmaos = btn.parentElement.querySelectorAll('.opcao');
