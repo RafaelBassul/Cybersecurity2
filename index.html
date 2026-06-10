@@ -100,8 +100,23 @@
   .b17{border-top:5px solid var(--teal);} .b18{border-top:5px solid var(--verde);}
   /* ===== Dark mode ===== */
   body, section.modulo, .pergunta, .opcao, table, code{transition:background-color .25s, color .25s, border-color .25s;}
-  #tema-btn{width:100%; background:#1b2d44; color:#cdd9e5; border:1px solid #2a3a50; border-radius:8px; padding:8px 10px; cursor:pointer; font-size:.85rem; margin-bottom:12px; font-family:inherit;}
-  #tema-btn:hover{background:#24395a; color:#fff;}
+  #tema-btn, #deutera-btn{width:100%; background:#1b2d44; color:#cdd9e5; border:1px solid #2a3a50; border-radius:8px; padding:8px 10px; cursor:pointer; font-size:.85rem; margin-bottom:12px; font-family:inherit;}
+  #tema-btn:hover, #deutera-btn:hover{background:#24395a; color:#fff;}
+  #deutera-btn{margin-top:-6px;}
+  #deutera-btn.ativo{background:#0072B2; color:#fff; border-color:#0072B2;}
+  /* ===== Modo deuteranopia (paleta azul/laranja, sem depender de verde×vermelho) ===== */
+  body.deutera{--verde:#0072B2; --vermelho:#c77f00; --teal:#56B4E9;}
+  body.deutera .dica{background:#e7f1fc; border-color:#b9d7f2;}
+  body.deutera .atencao{background:#fdf2dd; border-color:#ecd29a;}
+  body.deutera .opcao.certa{background:#d8eaff !important; border-color:#0072B2 !important;}
+  body.deutera .opcao.errada{background:#ffeacc !important; border-color:#c77f00 !important;}
+  body.deutera.dark .dica{background:#12263a; border-color:#1f4a6e;}
+  body.deutera.dark .atencao{background:#332608; border-color:#6b5418;}
+  body.deutera.dark .opcao.certa{background:#10304d !important; border-color:#56B4E9 !important;}
+  body.deutera.dark .opcao.errada{background:#3c2c0c !important; border-color:#E69F00 !important;}
+  /* Overlay "bonato bobao" */
+  #deutera-overlay{position:fixed; inset:0; background:transparent; color:#0072B2; text-shadow:0 0 14px rgba(255,255,255,.95), 0 0 4px rgba(255,255,255,.95), 0 4px 22px rgba(0,0,0,.45); display:flex; align-items:center; justify-content:center; font-size:clamp(2.2rem, 9vw, 6rem); font-weight:900; z-index:10000; text-transform:uppercase; letter-spacing:.06em; text-align:center; animation:deuFade 2s forwards; pointer-events:none;}
+  @keyframes deuFade{0%{opacity:0; transform:scale(.85);} 12%{opacity:1; transform:scale(1);} 80%{opacity:1;} 100%{opacity:0;}}
   body.dark{
     --bg:#0d1421; --card:#16202f; --ink:#e3eaf3; --muted:#93a4b8; --borda:#2a3a50;
     --azul:#5ba0ff; --verde:#34c97b; --laranja:#ffa14e; --roxo:#a98aed;
@@ -151,6 +166,7 @@
 <nav id="menu" aria-label="Navegação do guia">
   <h2>📘 Network Security</h2>
   <button id="tema-btn" type="button">🌙 Modo escuro</button>
+  <button id="deutera-btn" type="button">👁️ Modo deuteranopia</button>
   <div class="secao">Início</div>
   <a href="#inicio">Visão geral do guia</a>
   <a href="#mapa">Mapa do conteúdo</a>
@@ -1126,6 +1142,28 @@ let temaSalvo = null;
 try{ temaSalvo = localStorage.getItem('tema'); }catch(e){}
 setTema(temaSalvo ? temaSalvo === 'dark' : window.matchMedia('(prefers-color-scheme: dark)').matches);
 temaBtn.addEventListener('click', () => setTema(!document.body.classList.contains('dark')));
+// Modo deuteranopia
+const deuBtn = document.getElementById('deutera-btn');
+function setDeutera(ligado){
+  document.body.classList.toggle('deutera', ligado);
+  deuBtn.classList.toggle('ativo', ligado);
+  deuBtn.textContent = ligado ? '👁️ Deuteranopia: ATIVADO' : '👁️ Modo deuteranopia';
+  try{ localStorage.setItem('deutera', ligado ? '1' : '0'); }catch(e){}
+}
+deuBtn.addEventListener('click', () => {
+  const ligar = !document.body.classList.contains('deutera');
+  if(ligar){
+    const ov = document.createElement('div');
+    ov.id = 'deutera-overlay';
+    ov.textContent = 'Comi o cu do bonato';
+    document.body.appendChild(ov);
+    setTimeout(() => ov.remove(), 2000);
+  }
+  setDeutera(ligar);
+});
+let deuSalvo = null;
+try{ deuSalvo = localStorage.getItem('deutera'); }catch(e){}
+if(deuSalvo === '1') setDeutera(true);
 // Quiz
 function resp(btn, certa){
   const irmaos = btn.parentElement.querySelectorAll('.opcao');
