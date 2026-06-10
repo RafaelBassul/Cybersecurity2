@@ -1,0 +1,1065 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Guia de Estudo — Network Security (Módulos 9–18) | Cisco NetAcad</title>
+<style>
+  :root{
+    --bg:#f4f6fa; --card:#ffffff; --ink:#1e2a38; --muted:#5b6b7c;
+    --azul:#0d6efd; --verde:#198754; --laranja:#fd7e14; --roxo:#6f42c1;
+    --vermelho:#dc3545; --ciano:#0aa2c0; --rosa:#d63384; --teal:#20c997;
+    --borda:#e3e8ef; --code-bg:#0f172a; --code-ink:#e2e8f0;
+  }
+  *{box-sizing:border-box; margin:0; padding:0;}
+  html{scroll-behavior:smooth;}
+  body{font-family:"Segoe UI", Roboto, Helvetica, Arial, sans-serif; background:var(--bg); color:var(--ink); line-height:1.65;}
+  /* Barra de progresso de leitura */
+  #progresso{position:fixed; top:0; left:0; height:4px; background:linear-gradient(90deg,var(--azul),var(--teal)); width:0%; z-index:999;}
+  /* Layout */
+  .layout{display:flex; max-width:1400px; margin:0 auto;}
+  nav#menu{width:265px; flex-shrink:0; position:sticky; top:0; height:100vh; overflow-y:auto; background:#0f1c2e; padding:18px 14px; color:#cdd9e5;}
+  nav#menu h2{font-size:.95rem; color:#fff; margin:6px 4px 12px; display:flex; align-items:center; gap:8px;}
+  nav#menu a{display:block; color:#b8c7d9; text-decoration:none; font-size:.86rem; padding:8px 10px; border-radius:8px; margin-bottom:3px; border-left:3px solid transparent; transition:.15s;}
+  nav#menu a:hover{background:#1b2d44; color:#fff;}
+  nav#menu a.ativo{background:#1b2d44; color:#fff; border-left-color:var(--teal);}
+  nav#menu .secao{font-size:.7rem; text-transform:uppercase; letter-spacing:.08em; color:#7b8ea3; margin:16px 6px 6px;}
+  main{flex:1; min-width:0; padding:28px 36px 80px;}
+  /* Cabeçalho */
+  header.hero{background:linear-gradient(135deg,#0f1c2e 0%, #14365c 60%, #0d6efd 130%); color:#fff; border-radius:18px; padding:38px 40px; margin-bottom:26px;}
+  header.hero h1{font-size:1.9rem; margin-bottom:8px;}
+  header.hero p{color:#c9d8ea; max-width:880px;}
+  .pills{display:flex; flex-wrap:wrap; gap:8px; margin-top:16px;}
+  .pill{background:rgba(255,255,255,.14); border:1px solid rgba(255,255,255,.25); padding:5px 12px; border-radius:999px; font-size:.8rem;}
+  /* Cartões / módulos */
+  section.modulo{background:var(--card); border:1px solid var(--borda); border-radius:16px; padding:30px 34px; margin-bottom:30px; scroll-margin-top:20px; box-shadow:0 1px 3px rgba(15,28,46,.06);}
+  .mod-tag{display:inline-flex; align-items:center; gap:8px; font-size:.78rem; font-weight:700; letter-spacing:.06em; text-transform:uppercase; color:#fff; padding:5px 14px; border-radius:999px; margin-bottom:12px;}
+  section.modulo h2{font-size:1.55rem; margin-bottom:6px;}
+  section.modulo h3{font-size:1.18rem; margin:28px 0 10px; padding-bottom:6px; border-bottom:2px solid var(--borda);}
+  section.modulo h4{font-size:1rem; margin:18px 0 8px;}
+  section.modulo p{margin:10px 0;}
+  section.modulo ul, section.modulo ol{margin:10px 0 10px 24px;}
+  section.modulo li{margin:6px 0;}
+  .objetivo{color:var(--muted); font-size:.95rem; font-style:italic; margin-bottom:14px;}
+  /* Caixas didáticas */
+  .box{border-radius:12px; padding:14px 18px; margin:14px 0; border:1px solid; font-size:.95rem;}
+  .box b.titulo{display:block; margin-bottom:6px; font-size:.9rem; text-transform:uppercase; letter-spacing:.04em;}
+  .conceito{background:#eef4ff; border-color:#c6d8f7;}
+  .conceito b.titulo{color:var(--azul);}
+  .analogia{background:#fff7ec; border-color:#fde3c0;}
+  .analogia b.titulo{color:var(--laranja);}
+  .dica{background:#ecfaf1; border-color:#c2ecd2;}
+  .dica b.titulo{color:var(--verde);}
+  .atencao{background:#fdeef0; border-color:#f6c9cf;}
+  .atencao b.titulo{color:var(--vermelho);}
+  /* Tabelas */
+  .tabela-wrap{overflow-x:auto; margin:14px 0;}
+  table{width:100%; border-collapse:collapse; font-size:.92rem; background:#fff;}
+  th{background:#0f1c2e; color:#fff; text-align:left; padding:10px 12px; font-weight:600;}
+  td{padding:9px 12px; border-bottom:1px solid var(--borda); vertical-align:top;}
+  tr:nth-child(even) td{background:#f8fafd;}
+  /* Código / CLI */
+  pre.cli{background:var(--code-bg); color:var(--code-ink); border-radius:12px; padding:16px 18px; overflow-x:auto; font-family:Consolas,"Courier New",monospace; font-size:.85rem; line-height:1.55; margin:14px 0;}
+  pre.cli .cm{color:#7dd3fc;} /* comando */
+  pre.cli .ct{color:#94a3b8;} /* comentário */
+  code{background:#e9eef6; padding:2px 6px; border-radius:6px; font-family:Consolas,monospace; font-size:.88em;}
+  /* Fluxos com setas */
+  .fluxo{display:flex; flex-wrap:wrap; align-items:center; gap:8px; margin:14px 0; font-size:.9rem;}
+  .fluxo .et{background:#0f1c2e; color:#fff; padding:8px 14px; border-radius:10px;}
+  .fluxo .seta{color:var(--muted); font-weight:700;}
+  /* Quiz */
+  .quiz{background:#f2f0fb; border:1px solid #ddd6f3; border-radius:14px; padding:20px 22px; margin-top:26px;}
+  .quiz h3{border:none !important; margin-top:0 !important; color:var(--roxo);}
+  .pergunta{background:#fff; border:1px solid var(--borda); border-radius:12px; padding:14px 16px; margin:12px 0;}
+  .pergunta p.enunciado{font-weight:600; margin-bottom:10px;}
+  .opcao{display:block; width:100%; text-align:left; background:#f7f9fc; border:1px solid var(--borda); border-radius:9px; padding:9px 12px; margin:6px 0; cursor:pointer; font-size:.92rem; font-family:inherit; color:var(--ink); transition:.15s;}
+  .opcao:hover{border-color:var(--azul); background:#eef4ff;}
+  .opcao.certa{background:#d9f3e3 !important; border-color:var(--verde) !important; font-weight:600;}
+  .opcao.errada{background:#fbdfe3 !important; border-color:var(--vermelho) !important;}
+  details.explica{margin-top:8px; font-size:.9rem;}
+  details.explica summary{cursor:pointer; color:var(--roxo); font-weight:600;}
+  details.explica div{background:#fbfaff; border-left:3px solid var(--roxo); padding:10px 14px; margin-top:8px; border-radius:0 8px 8px 0;}
+  /* Glossário */
+  dl.glossario dt{font-weight:700; color:var(--azul); margin-top:12px;}
+  dl.glossario dd{margin-left:0; color:var(--ink);}
+  /* Botão topo */
+  #topo-btn{position:fixed; right:22px; bottom:22px; background:var(--azul); color:#fff; border:none; border-radius:50%; width:46px; height:46px; font-size:1.2rem; cursor:pointer; box-shadow:0 4px 14px rgba(13,110,253,.4); display:none; z-index:998;}
+  /* Cores por módulo */
+  .c9{background:var(--azul);} .c10{background:var(--ciano);} .c11{background:var(--vermelho);}
+  .c14{background:var(--laranja);} .c15{background:var(--roxo);} .c16{background:var(--rosa);}
+  .c17{background:var(--teal);} .c18{background:var(--verde);}
+  .b9{border-top:5px solid var(--azul);} .b10{border-top:5px solid var(--ciano);} .b11{border-top:5px solid var(--vermelho);}
+  .b14{border-top:5px solid var(--laranja);} .b15{border-top:5px solid var(--roxo);} .b16{border-top:5px solid var(--rosa);}
+  .b17{border-top:5px solid var(--teal);} .b18{border-top:5px solid var(--verde);}
+  /* Responsivo */
+  @media (max-width: 900px){
+    .layout{flex-direction:column;}
+    nav#menu{position:relative; width:100%; height:auto; display:flex; flex-wrap:wrap; gap:4px;}
+    nav#menu .secao{width:100%;}
+    nav#menu a{flex:1 1 40%;}
+    main{padding:18px;}
+    section.modulo{padding:20px;}
+    header.hero{padding:26px;}
+  }
+  @media print{
+    nav#menu, #topo-btn, #progresso{display:none !important;}
+    body{background:#fff;}
+    section.modulo{box-shadow:none; border:1px solid #ccc; page-break-inside:avoid;}
+  }
+</style>
+</head>
+<body>
+<div id="progresso"></div>
+<div class="layout">
+
+<nav id="menu" aria-label="Navegação do guia">
+  <h2>📘 Network Security</h2>
+  <div class="secao">Início</div>
+  <a href="#inicio">Visão geral do guia</a>
+  <a href="#mapa">Mapa do conteúdo</a>
+  <div class="secao">Defesa de perímetro</div>
+  <a href="#mod9">9 · Tecnologias de Firewall</a>
+  <a href="#mod10">10 · Firewalls ZPF</a>
+  <a href="#mod11">11 · Tecnologias IPS</a>
+  <div class="secao">Defesa interna (LAN)</div>
+  <a href="#mod14">14 · Segurança de Camada 2</a>
+  <div class="secao">Criptografia</div>
+  <a href="#mod15">15 · Serviços Criptográficos</a>
+  <a href="#mod16">16 · Integridade e Autenticidade</a>
+  <a href="#mod17">17 · Criptografia de Chave Pública</a>
+  <div class="secao">Aplicação prática</div>
+  <a href="#mod18">18 · VPNs</a>
+  <div class="secao">Apoio</div>
+  <a href="#glossario">Glossário rápido</a>
+</nav>
+
+<main>
+
+<header class="hero" id="inicio">
+  <h1>🛡️ Guia de Estudo — Cybersecurity: Network Security</h1>
+  <p>Resumo didático e abrangente dos <b>Módulos 9, 10, 11, 14, 15, 16, 17 e 18</b> do curso Cisco Networking Academy. Cada módulo segue a estrutura oficial do curso, com explicações simplificadas, analogias, tabelas comparativas, comandos de configuração e um mini-quiz no final para você testar o que aprendeu.</p>
+  <div class="pills">
+    <span class="pill">🔥 Firewalls e ZPF</span>
+    <span class="pill">🚨 IDS / IPS</span>
+    <span class="pill">🔌 Segurança de Camada 2</span>
+    <span class="pill">🔐 Criptografia e PKI</span>
+    <span class="pill">🌐 VPNs e IPsec</span>
+  </div>
+</header>
+
+<section class="modulo" id="mapa">
+  <h2>🗺️ Mapa do conteúdo — como os módulos se conectam</h2>
+  <p>Antes de mergulhar, entenda a lógica da sequência. O curso constrói a defesa da rede em camadas:</p>
+  <div class="fluxo">
+    <span class="et">Mód. 9–10<br><small>Firewall filtra o tráfego na borda</small></span>
+    <span class="seta">➜</span>
+    <span class="et">Mód. 11<br><small>IPS detecta e bloqueia ataques que passam</small></span>
+    <span class="seta">➜</span>
+    <span class="et">Mód. 14<br><small>Switches protegem a rede interna (L2)</small></span>
+    <span class="seta">➜</span>
+    <span class="et">Mód. 15–17<br><small>Criptografia protege os dados</small></span>
+    <span class="seta">➜</span>
+    <span class="et">Mód. 18<br><small>VPN aplica tudo isso na prática</small></span>
+  </div>
+  <div class="analogia"><b class="titulo">🏰 Analogia geral: o castelo</b>
+  Pense na rede como um castelo medieval: o <b>firewall</b> é o portão com guardas (decide quem entra), o <b>IPS</b> é a patrulha que circula procurando intrusos disfarçados, a <b>segurança de camada 2</b> são as fechaduras das portas internas (de nada adianta o portão se qualquer um abre os quartos), a <b>criptografia</b> é o lacre e o selo real nas cartas (ninguém lê nem falsifica), e a <b>VPN</b> é o túnel secreto que liga dois castelos aliados por território inimigo.</div>
+  <div class="dica"><b class="titulo">💡 Como usar este guia</b>
+  Estude um módulo por vez, faça o mini-quiz no final de cada um e use o glossário para revisão rápida antes da prova. Os blocos coloridos destacam: <b>azul</b> = conceito-chave, <b>laranja</b> = analogia, <b>verde</b> = dica de prova, <b>vermelho</b> = pegadinha/atenção.</div>
+</section>
+
+<section class="modulo b9" id="mod9">
+  <span class="mod-tag c9">Módulo 9</span>
+  <h2>🔥 Tecnologias de Firewall</h2>
+  <p class="objetivo">Objetivo do módulo: explicar como os firewalls são implementados para proteger a rede, conhecendo seus tipos, benefícios, limitações e seu papel no design da rede.</p>
+
+  <h3>9.1 — Proteger redes com firewalls</h3>
+  <div class="conceito"><b class="titulo">📌 Conceito-chave: o que é um firewall?</b>
+  Um <b>firewall</b> é um sistema (ou grupo de sistemas) que <b>aplica uma política de controle de acesso entre redes</b> — por exemplo, entre a rede interna da empresa e a Internet. Ele decide qual tráfego passa e qual é bloqueado.</div>
+
+  <div class="analogia"><b class="titulo">🚪 Analogia</b>
+  O firewall é o <b>porteiro do prédio</b>: ele tem uma lista de regras (quem pode entrar, em qual horário, por qual porta) e todo mundo é obrigado a passar pela portaria — não existe entrada lateral.</div>
+
+  <h4>Propriedades comuns a todos os firewalls</h4>
+  <ul>
+    <li>São <b>resistentes a ataques de rede</b> (o próprio equipamento é "endurecido").</li>
+    <li>São o <b>único ponto de trânsito</b> entre a rede interna e as redes externas — todo o tráfego flui através do firewall.</li>
+    <li><b>Aplicam a política de controle de acesso</b> da organização.</li>
+  </ul>
+
+  <h4>Benefícios ✅ e limitações ⚠️</h4>
+  <div class="tabela-wrap"><table>
+    <tr><th>Benefícios</th><th>Limitações</th></tr>
+    <tr>
+      <td>
+        • Impede a exposição de hosts e aplicações sensíveis a usuários não confiáveis<br>
+        • Sanitiza o fluxo de protocolos, evitando exploração de falhas<br>
+        • Bloqueia dados maliciosos vindos de servidores e clientes<br>
+        • Reduz a complexidade do gerenciamento de segurança (concentra o controle em poucos pontos)
+      </td>
+      <td>
+        • Se mal configurado, pode criar um <b>ponto único de falha</b><br>
+        • Dados indesejados podem ser <b>tunelados</b> ou escondidos em tráfego legítimo<br>
+        • Usuários podem procurar maneiras de <b>burlar</b> o firewall (ex.: modem 4G)<br>
+        • O desempenho da rede pode ser reduzido<br>
+        • Tráfego legítimo pode ser bloqueado por engano
+      </td>
+    </tr>
+  </table></div>
+
+  <h3>9.1.2 — Tipos de firewalls</h3>
+  <div class="tabela-wrap"><table>
+    <tr><th>Tipo</th><th>Camadas OSI</th><th>Como funciona</th></tr>
+    <tr><td><b>Filtragem de pacotes<br>(stateless / sem estado)</b></td><td>3 e 4</td><td>Analisa cada pacote isoladamente com base em IP de origem/destino, porta TCP/UDP e protocolo. Normalmente é um roteador com ACLs.</td></tr>
+    <tr><td><b>Com estado<br>(stateful)</b> ⭐</td><td>3, 4 e 5</td><td>O mais comum. Mantém uma <b>tabela de estado</b> das conexões e permite automaticamente o tráfego de <b>retorno</b> de conexões iniciadas por dentro.</td></tr>
+    <tr><td><b>Gateway de aplicação<br>(proxy)</b></td><td>3, 4, 5 e 7</td><td>Atua como intermediário: o cliente conecta no proxy e o proxy conecta no destino. Filtra inclusive o conteúdo da camada de aplicação. Geralmente é software.</td></tr>
+    <tr><td><b>Próxima geração (NGFW)</b></td><td>3 a 7</td><td>Stateful “turbinado”: <b>prevenção de intrusões integrada (IPS)</b>, <b>reconhecimento e controle de aplicações</b>, caminhos de atualização para novas fontes de informação e técnicas contra ameaças em evolução.</td></tr>
+  </table></div>
+  <p>Outros métodos de implementação citados no curso:</p>
+  <ul>
+    <li><b>Firewall baseado em host</b> — PC ou servidor executando software de firewall.</li>
+    <li><b>Firewall transparente</b> — filtra tráfego entre duas interfaces em <b>modo bridge (camada 2)</b>, sem endereço IP “visível”.</li>
+    <li><b>Firewall híbrido</b> — combina características de vários tipos (ex.: stateful + gateway de aplicação).</li>
+  </ul>
+
+  <h3>9.1.4 — Filtragem de pacotes: prós e contras</h3>
+  <div class="tabela-wrap"><table>
+    <tr><th>Vantagens ✅</th><th>Desvantagens ⚠️</th></tr>
+    <tr>
+      <td>
+        • Regras simples: permite ou nega com base em endereços e portas<br>
+        • <b>Baixo impacto no desempenho</b> da rede<br>
+        • Fácil de implementar (ACLs em roteadores)<br>
+        • Faz grande parte do trabalho de um firewall caro, com baixo custo
+      </td>
+      <td>
+        • <b>Suscetível a IP spoofing</b> (confia no endereço declarado)<br>
+        • Não filtra de forma confiável <b>pacotes fragmentados</b><br>
+        • ACLs complexas são difíceis de criar e manter<br>
+        • <b>Sem estado</b>: examina cada pacote isoladamente, sem contexto<br>
+        • Não filtra serviços com <b>portas dinâmicas</b> nem informações das camadas superiores
+      </td>
+    </tr>
+  </table></div>
+
+  <h3>9.1.5 — Firewall com estado (stateful): prós e contras</h3>
+  <div class="conceito"><b class="titulo">📌 Como o stateful “pensa”</b>
+  Quando um host interno abre uma conexão (ex.: acessa um site), o firewall registra na <b>tabela de estado</b>: IPs, portas e flags TCP. Quando a resposta chega, ele compara com a tabela: se é a continuação de uma sessão legítima, <b>libera sem precisar de regra explícita</b>.</div>
+  <div class="tabela-wrap"><table>
+    <tr><th>Vantagens ✅</th><th>Desvantagens ⚠️</th></tr>
+    <tr>
+      <td>
+        • Frequentemente usado como <b>principal meio de defesa</b><br>
+        • Filtragem mais rigorosa que a de pacotes<br>
+        • Bom desempenho<br>
+        • Defende contra spoofing e DoS verificando se as conexões são legítimas<br>
+        • Fornece informações de log mais ricas
+      </td>
+      <td>
+        • <b>Não inspeciona a camada de aplicação</b><br>
+        • Nem todos os protocolos mantêm estado (<b>UDP e ICMP são sem estado</b>)<br>
+        • Dificuldade com aplicações que usam <b>portas dinâmicas</b><br>
+        • <b>Não autentica o usuário</b> — só olha o tráfego
+      </td>
+    </tr>
+  </table></div>
+
+  <h3>9.2 — Firewalls no design de rede</h3>
+  <h4>Zonas clássicas</h4>
+  <ul>
+    <li><b>Rede privada (interna / inside)</b> — confiável, protegida.</li>
+    <li><b>Rede pública (externa / outside)</b> — não confiável (Internet).</li>
+    <li><b>DMZ (zona desmilitarizada)</b> — área intermediária que hospeda serviços acessíveis de fora (web, e-mail, DNS).</li>
+  </ul>
+  <div class="conceito"><b class="titulo">📌 Regras típicas com DMZ</b>
+  <ul>
+    <li>Tráfego <b>de dentro para fora</b>: permitido e inspecionado (retorno liberado pelo estado).</li>
+    <li>Tráfego <b>de fora para dentro</b>: <b>bloqueado</b>.</li>
+    <li>Tráfego <b>de fora para a DMZ</b>: permitido <b>seletivamente</b> (só as portas dos serviços públicos, ex.: 80/443).</li>
+    <li>Tráfego <b>da DMZ para dentro</b>: bloqueado (se um servidor da DMZ for invadido, a rede interna continua protegida).</li>
+  </ul></div>
+  <div class="analogia"><b class="titulo">🏨 Analogia da DMZ</b>
+  A DMZ é o <b>saguão do hotel</b>: visitantes podem entrar no saguão (servidores públicos), mas só hóspedes com cartão sobem aos quartos (rede interna).</div>
+  <h4>Defesa em profundidade (camadas)</h4>
+  <p>O firewall não trabalha sozinho. Uma abordagem em camadas usa: roteador de borda como primeira linha de filtragem ➜ firewall interno stateful ➜ proteções internas (IPS, segurança de camada 2, endpoint). É o conceito de <b>defesa em profundidade</b>: se uma camada falha, a próxima segura.</p>
+  <div class="dica"><b class="titulo">💡 Dica de prova</b>
+  Guarde os números: filtragem de pacotes = <b>camadas 3–4</b>; stateful = <b>3, 4 e 5</b>; gateway de aplicação/proxy = <b>até a camada 7</b>. E lembre: <b>UDP/ICMP não têm estado</b> — limitação clássica cobrada sobre firewalls stateful.</div>
+
+  <div class="quiz">
+    <h3>🧠 Mini-quiz — Módulo 9</h3>
+    <div class="pergunta">
+      <p class="enunciado">1) Qual firewall mantém uma tabela de conexões e libera automaticamente o tráfego de retorno?</p>
+      <button class="opcao" onclick="resp(this,false)">Filtragem de pacotes (stateless)</button>
+      <button class="opcao" data-ok="1" onclick="resp(this,true)">Firewall com estado (stateful)</button>
+      <button class="opcao" onclick="resp(this,false)">Firewall transparente</button>
+      <details class="explica"><summary>Ver explicação</summary><div>O stateful registra cada sessão em uma tabela de estado (camadas 3, 4 e 5) e reconhece respostas de conexões iniciadas internamente.</div></details>
+    </div>
+    <div class="pergunta">
+      <p class="enunciado">2) Servidores web e de e-mail acessíveis pela Internet devem ficar em qual área?</p>
+      <button class="opcao" onclick="resp(this,false)">Rede interna</button>
+      <button class="opcao" onclick="resp(this,false)">Rede externa</button>
+      <button class="opcao" data-ok="1" onclick="resp(this,true)">DMZ</button>
+      <details class="explica"><summary>Ver explicação</summary><div>A DMZ hospeda serviços públicos: aceita acesso vindo de fora apenas em portas específicas e não pode iniciar tráfego para a rede interna.</div></details>
+    </div>
+    <div class="pergunta">
+      <p class="enunciado">3) Qual recurso diferencia um NGFW de um stateful tradicional?</p>
+      <button class="opcao" onclick="resp(this,false)">Usar ACLs com máscaras curinga</button>
+      <button class="opcao" data-ok="1" onclick="resp(this,true)">Reconhecimento/controle de aplicações e IPS integrado</button>
+      <button class="opcao" onclick="resp(this,false)">Operar em modo bridge na camada 2</button>
+      <details class="explica"><summary>Ver explicação</summary><div>O NGFW adiciona inspeção profunda: controle por aplicação, prevenção de intrusões integrada e atualização constante de inteligência de ameaças.</div></details>
+    </div>
+  </div>
+</section>
+
+<section class="modulo b10" id="mod10">
+  <span class="mod-tag c10">Módulo 10</span>
+  <h2>🧱 Firewalls de Política Baseados em Zona (ZPF)</h2>
+  <p class="objetivo">Objetivo do módulo: explicar como implementar um firewall baseado em zonas (Zone-Based Policy Firewall) usando a CLI de um roteador Cisco IOS.</p>
+
+  <h3>10.1 — Visão geral do ZPF</h3>
+  <p>Há duas formas de transformar um roteador Cisco IOS em firewall stateful:</p>
+  <ul>
+    <li><b>Classic IOS Firewall (CBAC)</b> — modelo antigo, baseado em interfaces e ACLs.</li>
+    <li><b>ZPF (Zone-Based Policy Firewall)</b> — modelo atual: as interfaces são agrupadas em <b>zonas</b> e a política de inspeção é aplicada ao tráfego <b>entre zonas</b>.</li>
+  </ul>
+  <div class="conceito"><b class="titulo">📌 Conceito-chave: zona</b>
+  Uma <b>zona</b> é um grupo de interfaces com funções/níveis de confiança semelhantes (ex.: zona <i>INSIDE</i> = LAN, zona <i>OUTSIDE</i> = Internet, zona <i>DMZ</i> = servidores públicos). A política não é mais "por interface", e sim "do par de zonas A ➜ B".</div>
+  <h4>Benefícios do ZPF</h4>
+  <ul>
+    <li><b>Não depende de ACLs</b> para a política principal.</li>
+    <li>A postura padrão do roteador é <b>bloquear tudo, a menos que explicitamente permitido</b> (deny all implícito entre zonas).</li>
+    <li>Políticas <b>fáceis de ler</b> e de solucionar problemas (C3PL — linguagem de política em 3 camadas).</li>
+    <li><b>Uma política</b> trata um fluxo de tráfego, em vez de várias ACLs e ações de inspeção espalhadas.</li>
+    <li>As interfaces podem ser adicionadas/removidas das zonas com facilidade.</li>
+  </ul>
+  <h4>Passos de design</h4>
+  <ol>
+    <li><b>Determinar as zonas</b> (separar a rede por nível de confiança).</li>
+    <li><b>Estabelecer as políticas entre zonas</b> (o que pode fluir de onde para onde).</li>
+    <li><b>Projetar a infraestrutura física</b> (onde cada interface se conecta).</li>
+    <li><b>Identificar subconjuntos dentro das zonas e mesclar requisitos de tráfego</b>.</li>
+  </ol>
+
+  <h3>10.2 — Operação do ZPF</h3>
+  <h4>As três ações possíveis</h4>
+  <div class="tabela-wrap"><table>
+    <tr><th>Ação</th><th>O que faz</th><th>Detalhe importante</th></tr>
+    <tr><td><b>inspect</b> ⭐</td><td>Inspeção <b>stateful</b> do tráfego</td><td>Permite <b>automaticamente o tráfego de retorno</b> da sessão (como um "permit" inteligente).</td></tr>
+    <tr><td><b>drop</b></td><td>Descarta o pacote</td><td>É a ação <b>padrão</b> para tráfego não permitido entre zonas (análoga ao deny implícito). Pode gerar log.</td></tr>
+    <tr><td><b>pass</b></td><td>Deixa passar <b>sem manter estado</b></td><td>Só vale em <b>um sentido</b> — o retorno precisa de outra política pass na direção oposta.</td></tr>
+  </table></div>
+
+  <h4>Regras para o tráfego em trânsito (resumo prático)</h4>
+  <ul>
+    <li>Se <b>nenhuma das interfaces</b> (entrada e saída) é membro de zona ➜ o tráfego <b>passa</b> normalmente.</li>
+    <li>Se <b>apenas uma</b> das interfaces está em uma zona ➜ o tráfego é <b>descartado</b>.</li>
+    <li>Se as duas interfaces estão em zonas <b>diferentes</b> ➜ só passa se existir um <b>par de zonas com política que permita</b> (inspect/pass).</li>
+    <li>Se as duas interfaces estão na <b>mesma zona</b> ➜ o tráfego <b>passa</b>.</li>
+  </ul>
+
+  <div class="conceito"><b class="titulo">📌 A "self zone"</b>
+  A <b>zona self</b> é o próprio roteador: todo tráfego <b>destinado ao roteador</b> (ex.: SSH, OSPF, ping para a interface) ou <b>gerado por ele</b> pertence à self zone. Por padrão, esse tráfego é <b>permitido</b> — mas você pode criar políticas zona ➜ self para restringi-lo (ex.: só permitir SSH de gerência).</div>
+
+  <h3>10.3 — Configurar um ZPF (passo a passo)</h3>
+  <div class="fluxo">
+    <span class="et">1. Criar zonas</span><span class="seta">➜</span>
+    <span class="et">2. Class-map<br><small>identificar o tráfego</small></span><span class="seta">➜</span>
+    <span class="et">3. Policy-map<br><small>definir a ação</small></span><span class="seta">➜</span>
+    <span class="et">4. Zone-pair<br><small>par origem/destino</small></span><span class="seta">➜</span>
+    <span class="et">5. Aplicar política e<br>interfaces às zonas</span>
+  </div>
+<pre class="cli"><span class="ct">! Passo 1 — criar as zonas</span>
+<span class="cm">zone security INSIDE</span>
+<span class="cm">zone security OUTSIDE</span>
+
+<span class="ct">! Passo 2 — class-map: QUAL tráfego inspecionar</span>
+<span class="cm">class-map type inspect match-any HTTP-TRAFEGO</span>
+ <span class="cm">match protocol http</span>
+ <span class="cm">match protocol https</span>
+ <span class="cm">match protocol dns</span>
+
+<span class="ct">! Passo 3 — policy-map: O QUE fazer com ele</span>
+<span class="cm">policy-map type inspect POLITICA-IN-OUT</span>
+ <span class="cm">class type inspect HTTP-TRAFEGO</span>
+  <span class="cm">inspect</span>
+
+<span class="ct">! Passo 4 — zone-pair: direção do fluxo</span>
+<span class="cm">zone-pair security IN-PARA-OUT source INSIDE destination OUTSIDE</span>
+ <span class="cm">service-policy type inspect POLITICA-IN-OUT</span>
+
+<span class="ct">! Passo 5 — colocar as interfaces nas zonas</span>
+<span class="cm">interface g0/0</span>
+ <span class="cm">zone-member security INSIDE</span>
+<span class="cm">interface s0/0/0</span>
+ <span class="cm">zone-member security OUTSIDE</span>
+
+<span class="ct">! Verificação</span>
+<span class="cm">show zone-pair security</span>
+<span class="cm">show policy-map type inspect zone-pair sessions</span></pre>
+  <div class="atencao"><b class="titulo">⚠️ Pegadinhas clássicas</b>
+  <ul>
+    <li>O <b>match-any</b> casa com <i>qualquer um</i> dos protocolos; <b>match-all</b> exige todos os critérios.</li>
+    <li>O zone-pair tem <b>direção</b>: IN ➜ OUT inspecionado não significa que OUT ➜ IN é permitido (só o retorno das sessões inspecionadas).</li>
+    <li>Assim que uma interface entra numa zona, o tráfego dela para interfaces de outras zonas é <b>bloqueado por padrão</b> até existir política.</li>
+  </ul></div>
+  <div class="dica"><b class="titulo">💡 Dica de prova</b>
+  Memorize o trio <b>C3PL</b>: <code>class-map</code> (classifica) ➜ <code>policy-map</code> (decide ação) ➜ <code>service-policy</code> aplicada num <code>zone-pair</code> (executa). E a diferença <b>inspect × pass</b>: inspect é stateful (retorno automático); pass é stateless (sem retorno).</div>
+
+  <div class="quiz">
+    <h3>🧠 Mini-quiz — Módulo 10</h3>
+    <div class="pergunta">
+      <p class="enunciado">1) Qual ação do ZPF rastreia o estado das conexões e permite o tráfego de retorno?</p>
+      <button class="opcao" onclick="resp(this,false)">pass</button>
+      <button class="opcao" onclick="resp(this,false)">drop</button>
+      <button class="opcao" data-ok="1" onclick="resp(this,true)">inspect</button>
+      <details class="explica"><summary>Ver explicação</summary><div><b>inspect</b> = inspeção stateful. <b>pass</b> deixa passar sem estado (sem retorno automático) e <b>drop</b> descarta.</div></details>
+    </div>
+    <div class="pergunta">
+      <p class="enunciado">2) Uma interface está na zona INSIDE e outra não pertence a zona alguma. O que acontece com o tráfego entre elas?</p>
+      <button class="opcao" data-ok="1" onclick="resp(this,true)">É descartado</button>
+      <button class="opcao" onclick="resp(this,false)">Passa normalmente</button>
+      <button class="opcao" onclick="resp(this,false)">Passa apenas com inspeção</button>
+      <details class="explica"><summary>Ver explicação</summary><div>Regra do ZPF: se apenas UMA das interfaces do caminho é membro de zona, o tráfego é descartado.</div></details>
+    </div>
+    <div class="pergunta">
+      <p class="enunciado">3) Tráfego SSH destinado ao próprio roteador pertence a qual zona?</p>
+      <button class="opcao" onclick="resp(this,false)">OUTSIDE</button>
+      <button class="opcao" data-ok="1" onclick="resp(this,true)">Self zone</button>
+      <button class="opcao" onclick="resp(this,false)">DMZ</button>
+      <details class="explica"><summary>Ver explicação</summary><div>Todo tráfego dirigido ao roteador (ou gerado por ele) pertence à self zone — permitido por padrão, mas controlável por política.</div></details>
+    </div>
+  </div>
+</section>
+
+<section class="modulo b11" id="mod11">
+  <span class="mod-tag c11">Módulo 11</span>
+  <h2>🚨 Tecnologias IPS (Prevenção de Intrusões)</h2>
+  <p class="objetivo">Objetivo do módulo: explicar como IDS e IPS são usados para detectar e bloquear ataques, onde posicioná-los e como o tráfego é espelhado para monitoramento (SPAN).</p>
+
+  <h3>11.1 — Características de IDS e IPS</h3>
+  <p>Firewall bloqueia com base em <i>regras</i>; mas e os ataques escondidos em tráfego permitido? Para isso existem sistemas que analisam o <b>conteúdo e o comportamento</b> do tráfego comparando-o com <b>assinaturas</b> de ataques conhecidos.</p>
+
+  <div class="tabela-wrap"><table>
+    <tr><th></th><th>IDS — Detecção</th><th>IPS — Prevenção</th></tr>
+    <tr><td><b>Posição</b></td><td><b>Modo promíscuo (offline)</b>: recebe uma <b>cópia</b> do tráfego (via SPAN); o tráfego real não passa por ele.</td><td><b>Modo inline</b>: o tráfego real <b>atravessa</b> o IPS antes de seguir adiante.</td></tr>
+    <tr><td><b>Ação</b></td><td>Detecta e <b>alerta</b>; ações reativas vêm depois.</td><td>Pode <b>descartar o pacote malicioso na hora</b>, bloquear o atacante e disparar alarmes.</td></tr>
+    <tr><td><b>Latência/jitter</b></td><td><b>Não adiciona</b> (trabalha sobre cópia).</td><td><b>Adiciona</b> (cada pacote é analisado antes de passar).</td></tr>
+    <tr><td><b>Pacote de gatilho</b></td><td><b>Não consegue impedir</b> o pacote que disparou o alarme (ele já passou).</td><td><b>Consegue bloquear</b> o próprio pacote de gatilho.</td></tr>
+    <tr><td><b>Se o sensor falhar</b></td><td>Rede continua funcionando.</td><td>Pode afetar a rede (ponto de passagem); erros de configuração também.</td></tr>
+    <tr><td><b>Evasão</b></td><td>Mais vulnerável a técnicas de evasão.</td><td>Pode usar <b>normalização do tráfego</b> (ex.: remontar fragmentos) para reduzir evasões.</td></tr>
+  </table></div>
+
+  <div class="analogia"><b class="titulo">📹 Analogia</b>
+  O <b>IDS</b> é a <b>câmera de segurança</b>: registra o assalto e avisa a central, mas não impede o ladrão. O <b>IPS</b> é a <b>porta giratória com detector de metais</b>: o suspeito é barrado <i>antes</i> de entrar — porém todo mundo passa um pouco mais devagar.</div>
+
+  <p><b>Semelhanças:</b> ambos são implantados como <b>sensores</b>, usam <b>assinaturas</b> para detectar padrões (atômicas = um único pacote; compostas = sequência de pacotes) e podem trabalhar em conjunto (defesa em camadas: IPS na borda + IDS interno para análise).</p>
+
+  <h3>11.2 — Implementações de IPS</h3>
+  <h4>Duas famílias</h4>
+  <ul>
+    <li><b>IPS baseado em host (HIPS)</b> — software instalado no próprio computador/servidor: monitora processos, arquivos e chamadas do SO. Protege aquele host em qualquer rede, mas só enxerga a si mesmo (visão limitada da rede).</li>
+    <li><b>IPS baseado em rede</b> — sensor dedicado no caminho do tráfego, protege toda a rede. É implementado em:
+      <ul>
+        <li>Roteadores <b>ISR</b> com Snort IPS;</li>
+        <li>Firewalls <b>ASA</b> com módulo FirePOWER;</li>
+        <li><b>Appliances dedicados</b> Cisco FirePOWER (NGIPS);</li>
+        <li>Módulos para switches Catalyst.</li>
+      </ul></li>
+  </ul>
+  <div class="dica"><b class="titulo">💡 Boa prática de posicionamento</b>
+  Combine os dois: <b>HIPS</b> nos servidores críticos + <b>IPS de rede</b> nos pontos de entrada (atrás do firewall). Sensores devem ser dimensionados pela <b>largura de banda</b> que precisam analisar.</div>
+
+  <h3>11.3 — IPS em roteadores ISR (Snort)</h3>
+  <div class="conceito"><b class="titulo">📌 Snort</b>
+  O <b>Snort</b> é um IPS/IDS de rede <b>open source</b>, capaz de análise de tráfego em tempo real, registro de pacotes e detecção por assinaturas. Nos roteadores <b>ISR 4000</b>, roda como um <b>contêiner de serviço virtual</b> (precisa de RAM e flash suficientes).</div>
+  <ul>
+    <li><b>Modo IDS</b>: só inspeciona a cópia e <b>alerta</b> — não bloqueia.</li>
+    <li><b>Modo IPS</b>: inspeciona inline e <b>descarta</b> tráfego malicioso.</li>
+    <li>Usa <b>conjuntos de regras/assinaturas atualizáveis</b> (community ruleset gratuito e subscriber ruleset — Talos — atualizado com mais frequência).</li>
+    <li>Recursos: monitoramento com listas de permissão/bloqueio, log de eventos, atualização automática de assinaturas.</li>
+  </ul>
+
+  <h3>11.4 — Cisco SPAN (Switched Port Analyzer)</h3>
+  <p>Problema: um switch encaminha quadros <b>somente</b> para a porta de destino — então como um IDS (ou Wireshark) "enxerga" o tráfego dos outros? Resposta: <b>espelhamento de portas</b>.</p>
+  <div class="conceito"><b class="titulo">📌 SPAN</b>
+  O recurso <b>SPAN</b> copia o tráfego de uma ou mais portas (ou VLANs) de <b>origem</b> para uma porta de <b>destino</b>, onde está conectado o analisador/sensor IDS. A variante <b>RSPAN</b> (Remote SPAN) permite que origem e destino estejam em <b>switches diferentes</b>, usando uma VLAN especial para transporte.</div>
+<pre class="cli"><span class="ct">! Espelhar o tráfego da F0/1 para a F0/2 (onde está o IDS)</span>
+<span class="cm">monitor session 1 source interface FastEthernet 0/1</span>
+<span class="cm">monitor session 1 destination interface FastEthernet 0/2</span>
+
+<span class="ct">! Verificação</span>
+<span class="cm">show monitor</span></pre>
+  <div class="atencao"><b class="titulo">⚠️ Atenção</b>
+  A sessão SPAN associa <b>origem ➜ destino</b> pelo mesmo número de sessão. A porta de origem pode espelhar tráfego de entrada (rx), de saída (tx) ou <b>ambos (both — padrão)</b>.</div>
+
+  <div class="quiz">
+    <h3>🧠 Mini-quiz — Módulo 11</h3>
+    <div class="pergunta">
+      <p class="enunciado">1) Qual é a principal vantagem de um IPS sobre um IDS?</p>
+      <button class="opcao" onclick="resp(this,false)">Não adiciona latência à rede</button>
+      <button class="opcao" data-ok="1" onclick="resp(this,true)">Pode bloquear o pacote que disparou o alarme</button>
+      <button class="opcao" onclick="resp(this,false)">Funciona com cópia do tráfego via SPAN</button>
+      <details class="explica"><summary>Ver explicação</summary><div>Por estar inline, o IPS impede inclusive o pacote de gatilho. O custo disso é latência e risco se o sensor falhar.</div></details>
+    </div>
+    <div class="pergunta">
+      <p class="enunciado">2) Um IDS é implantado em modo promíscuo. Como ele recebe o tráfego para analisar?</p>
+      <button class="opcao" data-ok="1" onclick="resp(this,true)">Por uma cópia do tráfego (ex.: porta SPAN)</button>
+      <button class="opcao" onclick="resp(this,false)">Ficando fisicamente no caminho do tráfego</button>
+      <button class="opcao" onclick="resp(this,false)">Pelas tabelas de roteamento</button>
+      <details class="explica"><summary>Ver explicação</summary><div>Modo promíscuo = offline: o switch espelha (SPAN) o tráfego para a porta do sensor; o fluxo real nunca passa por dentro dele.</div></details>
+    </div>
+    <div class="pergunta">
+      <p class="enunciado">3) Qual solução protege apenas o computador onde está instalada?</p>
+      <button class="opcao" onclick="resp(this,false)">IPS baseado em rede</button>
+      <button class="opcao" onclick="resp(this,false)">Snort em um ISR 4000</button>
+      <button class="opcao" data-ok="1" onclick="resp(this,true)">HIPS (IPS baseado em host)</button>
+      <details class="explica"><summary>Ver explicação</summary><div>O HIPS roda no host e enxerga processos e sistema de arquivos locais — ótimo para o endpoint, mas sem visão da rede como um todo.</div></details>
+    </div>
+  </div>
+</section>
+
+<section class="modulo b14" id="mod14">
+  <span class="mod-tag c14">Módulo 14</span>
+  <h2>🔌 Considerações de Segurança da Camada 2</h2>
+  <p class="objetivo">Objetivo do módulo: identificar os ataques contra switches (camada 2) e configurar as mitigações: port security, proteção de VLAN, DHCP snooping, DAI, IP Source Guard e proteções do STP.</p>
+
+  <h3>14.1 — Por que a camada 2 importa tanto?</h3>
+  <div class="conceito"><b class="titulo">📌 O elo mais fraco</b>
+  A segurança é tão forte quanto o <b>elo mais fraco</b>. Se um atacante compromete a <b>camada 2</b> (switches), todas as camadas acima dela (IP, transporte, aplicação) ficam comprometidas — sem que as proteções superiores percebam. Por isso a LAN interna precisa de proteção própria, não só o perímetro.</div>
+  <div class="tabela-wrap"><table>
+    <tr><th>Categoria de ataque</th><th>Exemplos</th><th>Mitigação principal</th></tr>
+    <tr><td>Ataques à tabela MAC</td><td>Inundação de endereços MAC (flooding)</td><td><b>Port Security</b></td></tr>
+    <tr><td>Ataques de VLAN</td><td>VLAN hopping, double-tagging</td><td>Desativar DTP, VLAN nativa dedicada</td></tr>
+    <tr><td>Ataques de DHCP</td><td>Esgotamento (starvation) e spoofing</td><td><b>DHCP Snooping</b></td></tr>
+    <tr><td>Ataques de ARP</td><td>Envenenamento ARP (man-in-the-middle)</td><td><b>DAI</b> (Dynamic ARP Inspection)</td></tr>
+    <tr><td>Falsificação de endereços</td><td>IP/MAC spoofing</td><td><b>IPSG</b> (IP Source Guard)</td></tr>
+    <tr><td>Ataques ao STP</td><td>Manipulação do root bridge</td><td><b>BPDU Guard, Root Guard</b></td></tr>
+  </table></div>
+  <div class="dica"><b class="titulo">💡 Além disso…</b>
+  Sempre proteja o gerenciamento do switch: <b>SSH</b> (não Telnet), senhas fortes, desativar portas não usadas e usar VLAN de gerência fora da VLAN 1 (gerenciamento <i>out-of-band</i> quando possível).</div>
+
+  <h3>14.2 / 14.3 — Ataque à tabela MAC e Port Security</h3>
+  <h4>O ataque: MAC flooding</h4>
+  <p>A tabela MAC (CAM) do switch tem <b>tamanho finito</b>. Ferramentas como o <code>macof</code> enviam milhares de quadros com MACs de origem <b>falsos e aleatórios</b> por segundo. Quando a tabela enche, o switch passa a se comportar <b>como um hub</b>: inunda todos os quadros por todas as portas da VLAN — e o atacante captura o tráfego alheio.</p>
+  <h4>A defesa: Port Security</h4>
+  <p>Limita <b>quantos</b> e <b>quais</b> MACs podem usar cada porta de acesso:</p>
+<pre class="cli"><span class="cm">interface f0/1</span>
+ <span class="cm">switchport mode access</span>          <span class="ct">! obrigatório antes do port-security</span>
+ <span class="cm">switchport port-security</span>          <span class="ct">! ativa o recurso (máx. padrão: 1 MAC)</span>
+ <span class="cm">switchport port-security maximum 2</span>
+ <span class="cm">switchport port-security mac-address sticky</span>   <span class="ct">! aprende e grava na running-config</span>
+ <span class="cm">switchport port-security violation shutdown</span>    <span class="ct">! modo de violação (padrão)</span>
+ <span class="cm">switchport port-security aging time 120</span>
+<span class="ct">! Verificação</span>
+<span class="cm">show port-security interface f0/1</span>
+<span class="cm">show port-security address</span></pre>
+  <div class="tabela-wrap"><table>
+    <tr><th>Modo de violação</th><th>Descarta tráfego?</th><th>Gera log/contador?</th><th>Desativa a porta?</th></tr>
+    <tr><td><b>shutdown</b> (padrão)</td><td>Sim</td><td>Sim</td><td><b>Sim — estado err-disabled</b></td></tr>
+    <tr><td><b>restrict</b></td><td>Sim (MACs novos)</td><td><b>Sim (syslog + contador)</b></td><td>Não</td></tr>
+    <tr><td><b>protect</b></td><td>Sim (MACs novos)</td><td><b>Não (silencioso)</b></td><td>Não</td></tr>
+  </table></div>
+  <div class="atencao"><b class="titulo">⚠️ Porta em err-disabled</b>
+  Após uma violação em modo shutdown, a porta fica <b>err-disabled</b> (LED apagado, link down). Para reativar: corrigir a causa e executar <code>shutdown</code> ➜ <code>no shutdown</code> na interface.</div>
+
+  <h3>14.4 — Ataques de VLAN e mitigação</h3>
+  <h4>VLAN hopping (salto de VLAN)</h4>
+  <p>O atacante finge ser um <b>switch</b>: negocia um <b>trunk</b> via DTP com a porta do switch real. Conseguindo o trunk, ele acessa <b>todas as VLANs</b>.</p>
+  <h4>Double-tagging (dupla marcação)</h4>
+  <p>O atacante envia um quadro com <b>duas tags 802.1Q</b>: a externa é a da <b>VLAN nativa</b> do trunk (removida pelo 1º switch) e a interna é a da VLAN da vítima. O 2º switch lê a tag interna e entrega o quadro na VLAN alvo. É <b>unidirecional</b> e só funciona se o atacante estiver na <b>mesma VLAN nativa do trunk</b>.</p>
+  <h4>Mitigação</h4>
+<pre class="cli"><span class="ct">! Portas de acesso: nunca negociar trunk</span>
+<span class="cm">interface range f0/1 - 16</span>
+ <span class="cm">switchport mode access</span>
+ <span class="cm">switchport nonegotiate</span>
+<span class="ct">! Portas não utilizadas: desativar e jogar numa VLAN "estacionamento"</span>
+<span class="cm">interface range f0/17 - 20</span>
+ <span class="cm">switchport mode access</span>
+ <span class="cm">switchport access vlan 86</span>
+ <span class="cm">shutdown</span>
+<span class="ct">! Trunks: VLAN nativa dedicada (não usada por usuários) e DTP desligado</span>
+<span class="cm">interface f0/24</span>
+ <span class="cm">switchport mode trunk</span>
+ <span class="cm">switchport nonegotiate</span>
+ <span class="cm">switchport trunk native vlan 999</span></pre>
+
+  <h3>14.5 — Ataques de DHCP e DHCP Snooping</h3>
+  <h4>Os ataques</h4>
+  <ul>
+    <li><b>Esgotamento (starvation)</b>: ferramenta (ex.: Gobbler) solicita <b>todos os IPs disponíveis</b> do pool com MACs falsos ➜ usuários legítimos ficam sem endereço (DoS).</li>
+    <li><b>Spoofing de DHCP (servidor invasor)</b>: um <b>rogue server</b> responde mais rápido e entrega configurações falsas: <b>gateway errado</b> (man-in-the-middle), <b>DNS falso</b> (phishing) ou <b>IP inválido</b> (DoS).</li>
+  </ul>
+  <h4>A defesa: DHCP Snooping</h4>
+  <div class="conceito"><b class="titulo">📌 Como funciona</b>
+  O switch classifica portas como <b>confiáveis</b> (uplinks e porta do servidor DHCP legítimo) e <b>não confiáveis</b> (portas de acesso). Mensagens <b>de servidor</b> (OFFER/ACK) chegando por porta <b>não confiável</b> são <b>descartadas</b>. O recurso também monta a <b>tabela de associação (binding table)</b>: MAC ↔ IP ↔ VLAN ↔ porta — usada depois pelo DAI e pelo IPSG.</div>
+<pre class="cli"><span class="cm">ip dhcp snooping</span>                          <span class="ct">! ativa globalmente</span>
+<span class="cm">ip dhcp snooping vlan 10,20</span>               <span class="ct">! VLANs protegidas</span>
+<span class="cm">interface f0/24</span>
+ <span class="cm">ip dhcp snooping trust</span>                   <span class="ct">! uplink/servidor = confiável</span>
+<span class="cm">interface range f0/1 - 23</span>
+ <span class="cm">ip dhcp snooping limit rate 6</span>            <span class="ct">! limita pacotes DHCP/seg (anti-starvation)</span>
+<span class="cm">show ip dhcp snooping binding</span></pre>
+
+  <h3>14.6 — Ataques de ARP e DAI</h3>
+  <h4>O ataque: envenenamento ARP</h4>
+  <p>O atacante envia <b>respostas ARP gratuitas (gratuitous ARP)</b> falsas, dizendo: "o IP do gateway agora está no MEU MAC". As vítimas atualizam suas tabelas ARP e passam a enviar o tráfego <b>através do atacante</b> ➜ man-in-the-middle.</p>
+  <h4>A defesa: DAI (Dynamic ARP Inspection)</h4>
+  <ul>
+    <li>Intercepta pacotes ARP em portas <b>não confiáveis</b> e compara com a <b>binding table do DHCP snooping</b> (por isso o snooping é pré-requisito).</li>
+    <li>ARP com associação IP↔MAC inválida é <b>descartado e registrado</b>.</li>
+  </ul>
+<pre class="cli"><span class="cm">ip arp inspection vlan 10,20</span>
+<span class="cm">interface f0/24</span>
+ <span class="cm">ip arp inspection trust</span>                  <span class="ct">! uplink confiável</span></pre>
+
+  <h3>14.7 — Falsificação de endereço e IP Source Guard</h3>
+  <p>Em <b>IP/MAC spoofing</b> o atacante forja o endereço de origem para se passar por outro host ou escapar de filtros. A defesa é o <b>IP Source Guard (IPSG)</b>, que — usando a <b>binding table</b> do DHCP snooping — só permite, em cada porta de acesso, o tráfego cujo <b>IP (e opcionalmente MAC) de origem</b> coincide com o que foi aprendido. Qualquer pacote "fora do contrato" é descartado.</p>
+
+  <h3>14.8 / 14.9 — Spanning Tree (STP) e ataques ao STP</h3>
+  <div class="conceito"><b class="titulo">📌 STP em 1 minuto</b>
+  O <b>Spanning Tree Protocol</b> evita <b>loops de camada 2</b> em topologias com links redundantes. Ele elege uma <b>root bridge</b> (a de menor <i>Bridge ID</i> = prioridade + MAC) e bloqueia portas redundantes até sobrar uma única árvore sem loop, trocando informações por <b>BPDUs</b>.</div>
+  <p><b>Ataque de manipulação do STP:</b> o invasor conecta um switch (ou software) e envia <b>BPDUs com prioridade muito baixa</b> para se tornar a <b>root bridge</b>. Assim, parte do tráfego passa a fluir por ele — viabilizando captura/man-in-the-middle.</p>
+  <div class="dica"><b class="titulo">💡 Mitigação — a "família PortFast"</b>
+  <div class="tabela-wrap"><table>
+    <tr><th>Recurso</th><th>Função</th></tr>
+    <tr><td><b>PortFast</b></td><td>Coloca portas de <b>host</b> direto em <i>forwarding</i> (pula listen/learn). Use apenas em portas de acesso para usuários.</td></tr>
+    <tr><td><b>BPDU Guard</b> ⭐</td><td>Se uma porta com PortFast <b>receber um BPDU</b>, vai para <b>err-disabled</b>. Mata o ataque de root spoofing na origem.</td></tr>
+    <tr><td><b>Root Guard</b></td><td>Impede que uma porta designada vire caminho para uma nova raiz: ao receber um BPDU "superior", entra em <i>root-inconsistent</i>.</td></tr>
+    <tr><td><b>Loop Guard</b></td><td>Protege contra loops causados por links unidirecionais (quando BPDUs deixam de chegar).</td></tr>
+  </table></div></div>
+<pre class="cli"><span class="cm">interface f0/1</span>
+ <span class="cm">spanning-tree portfast</span>
+ <span class="cm">spanning-tree bpduguard enable</span>           <span class="ct">! por interface</span>
+<span class="ct">! Globalmente em todas as portas PortFast:</span>
+<span class="cm">spanning-tree portfast bpduguard default</span></pre>
+  <div class="dica"><b class="titulo">💡 Dica de prova — qual recurso para qual ataque?</b>
+  MAC flooding ➜ <b>Port Security</b>; VLAN hopping ➜ <b>desativar DTP + VLAN nativa dedicada</b>; DHCP spoofing/starvation ➜ <b>DHCP Snooping</b>; ARP poisoning ➜ <b>DAI</b>; IP/MAC spoofing ➜ <b>IP Source Guard</b>; manipulação do STP ➜ <b>BPDU Guard / Root Guard</b>.</div>
+
+  <div class="quiz">
+    <h3>🧠 Mini-quiz — Módulo 14</h3>
+    <div class="pergunta">
+      <p class="enunciado">1) O ataque de MAC flooding tem sucesso porque, com a tabela CAM cheia, o switch passa a:</p>
+      <button class="opcao" onclick="resp(this,false)">Desligar todas as portas</button>
+      <button class="opcao" data-ok="1" onclick="resp(this,true)">Inundar (flood) os quadros por todas as portas, como um hub</button>
+      <button class="opcao" onclick="resp(this,false)">Bloquear o tráfego de broadcast</button>
+      <details class="explica"><summary>Ver explicação</summary><div>Sem espaço para aprender o destino, o switch encaminha por todas as portas — permitindo ao atacante capturar o tráfego alheio.</div></details>
+    </div>
+    <div class="pergunta">
+      <p class="enunciado">2) A Dynamic ARP Inspection (DAI) depende de qual recurso para validar os pacotes ARP?</p>
+      <button class="opcao" onclick="resp(this,false)">Port Security</button>
+      <button class="opcao" data-ok="1" onclick="resp(this,true)">A tabela de associação (binding) do DHCP Snooping</button>
+      <button class="opcao" onclick="resp(this,false)">BPDU Guard</button>
+      <details class="explica"><summary>Ver explicação</summary><div>DAI e IP Source Guard usam a tabela MAC↔IP↔porta↔VLAN construída pelo DHCP Snooping — por isso o snooping é pré-requisito.</div></details>
+    </div>
+    <div class="pergunta">
+      <p class="enunciado">3) Qual recurso coloca em err-disabled uma porta de acesso que receba um BPDU?</p>
+      <button class="opcao" onclick="resp(this,false)">PortFast</button>
+      <button class="opcao" onclick="resp(this,false)">Root Guard</button>
+      <button class="opcao" data-ok="1" onclick="resp(this,true)">BPDU Guard</button>
+      <details class="explica"><summary>Ver explicação</summary><div>Portas de host não deveriam receber BPDUs; se receberem, o BPDU Guard desativa a porta, frustrando o ataque de STP.</div></details>
+    </div>
+  </div>
+</section>
+
+<section class="modulo b15" id="mod15">
+  <span class="mod-tag c15">Módulo 15</span>
+  <h2>🔐 Serviços Criptográficos</h2>
+  <p class="objetivo">Objetivo do módulo: explicar como a criptografia garante comunicações seguras, e os conceitos de criptografia, criptoanálise e criptologia.</p>
+
+  <h3>15.1 — Comunicações seguras: os 4 objetivos</h3>
+  <div class="tabela-wrap"><table>
+    <tr><th>Objetivo</th><th>O que garante</th><th>Como é obtido</th></tr>
+    <tr><td><b>Confidencialidade</b></td><td>Só o destinatário lê a mensagem</td><td><b>Criptografia</b> (simétrica/assimétrica)</td></tr>
+    <tr><td><b>Integridade</b></td><td>A mensagem não foi alterada no caminho</td><td><b>Hash</b> (MD5, SHA)</td></tr>
+    <tr><td><b>Autenticação</b></td><td>Confirma a identidade da origem</td><td><b>HMAC</b>, assinaturas digitais</td></tr>
+    <tr><td><b>Não repúdio</b></td><td>A origem não pode negar que enviou</td><td><b>Assinatura digital</b> (chave privada)</td></tr>
+  </table></div>
+  <div class="dica"><b class="titulo">💡 Mnemônico</b>
+  <b>C-I-A</b> + não repúdio. Confidencialidade = sigilo (criptografia); Integridade = "não mexeram" (hash); Autenticação = "é quem diz ser"; Não repúdio = "não dá pra negar depois".</div>
+
+  <h3>15.2 — Criptografia (cifragem)</h3>
+  <div class="conceito"><b class="titulo">📌 Termos essenciais</b>
+  <b>Texto claro (plaintext)</b> ➜ aplica-se uma <b>cifra (algoritmo)</b> com uma <b>chave</b> ➜ produz <b>texto cifrado (ciphertext)</b>. Quem tem a chave certa faz o caminho inverso (decifra).</div>
+  <h4>Cifras clássicas (históricas)</h4>
+  <ul>
+    <li><b>Transposição</b> — embaralha a <b>ordem</b> das letras (ex.: cerca de trilho / rail fence).</li>
+    <li><b>Substituição</b> — troca cada letra por outra (ex.: <b>cifra de César</b>).</li>
+    <li><b>Polialfabética</b> — usa vários alfabetos de substituição (ex.: <b>Vigenère</b>).</li>
+    <li><b>One-Time Pad (Vernam)</b> — chave do <b>tamanho da mensagem</b>, usada uma única vez; teoricamente <b>inquebrável</b> se bem aplicada.</li>
+  </ul>
+  <div class="analogia"><b class="titulo">✉️ Analogia</b>
+  Criptografia simétrica é como um <b>cofre com cadeado de segredo</b>: quem guarda e quem retira usam <b>o mesmo segredo</b>. O desafio é combinar esse segredo sem ninguém ouvir.</div>
+
+  <h3>15.3 — Criptoanálise (a arte de quebrar)</h3>
+  <p>Métodos usados por quem tenta quebrar a cifra <b>sem ter a chave</b>:</p>
+  <ul>
+    <li><b>Força bruta</b> — testa todas as chaves possíveis (por isso chaves longas importam).</li>
+    <li><b>Texto cifrado apenas (ciphertext-only)</b> — só se tem o texto cifrado.</li>
+    <li><b>Texto claro conhecido (known-plaintext)</b> — conhece pares de claro/cifrado.</li>
+    <li><b>Texto claro escolhido / texto cifrado escolhido</b> — o atacante escolhe entradas e observa as saídas.</li>
+    <li><b>Meet-in-the-middle</b> — explora ataques contra cifragem dupla.</li>
+    <li><b>Análise de frequência</b> — clássico contra cifras de substituição.</li>
+  </ul>
+  <div class="dica"><b class="titulo">💡 Tamanho de chave (keyspace)</b>
+  Cada <b>bit a mais dobra</b> o número de chaves possíveis. Por isso AES-256 é astronomicamente mais resistente à força bruta que DES (56 bits, hoje quebrável).</div>
+
+  <h3>15.4 — Criptologia</h3>
+  <div class="conceito"><b class="titulo">📌 A "equação" da área</b>
+  <b>Criptologia = Criptografia (fazer códigos) + Criptoanálise (quebrar códigos)</b>. As duas evoluem juntas: cada cifra nova provoca novas técnicas de quebra, e vice-versa. A criptografia é hoje base de VPNs, HTTPS, assinaturas e autenticação.</div>
+
+  <div class="quiz">
+    <h3>🧠 Mini-quiz — Módulo 15</h3>
+    <div class="pergunta">
+      <p class="enunciado">1) Qual serviço criptográfico garante que a mensagem NÃO foi alterada em trânsito?</p>
+      <button class="opcao" onclick="resp(this,false)">Confidencialidade</button>
+      <button class="opcao" data-ok="1" onclick="resp(this,true)">Integridade</button>
+      <button class="opcao" onclick="resp(this,false)">Não repúdio</button>
+      <details class="explica"><summary>Ver explicação</summary><div>Integridade é verificada por funções de hash (MD5/SHA): qualquer alteração muda o resumo gerado.</div></details>
+    </div>
+    <div class="pergunta">
+      <p class="enunciado">2) A cifra de César é um exemplo de qual técnica clássica?</p>
+      <button class="opcao" onclick="resp(this,false)">Transposição</button>
+      <button class="opcao" data-ok="1" onclick="resp(this,true)">Substituição</button>
+      <button class="opcao" onclick="resp(this,false)">One-Time Pad</button>
+      <details class="explica"><summary>Ver explicação</summary><div>César desloca cada letra um número fixo de posições — substitui um símbolo por outro, sem mudar a ordem.</div></details>
+    </div>
+    <div class="pergunta">
+      <p class="enunciado">3) Por que aumentar o tamanho da chave dificulta a força bruta?</p>
+      <button class="opcao" onclick="resp(this,false)">Torna o algoritmo secreto</button>
+      <button class="opcao" data-ok="1" onclick="resp(this,true)">Cada bit a mais dobra o número de chaves possíveis</button>
+      <button class="opcao" onclick="resp(this,false)">Reduz o texto cifrado</button>
+      <details class="explica"><summary>Ver explicação</summary><div>O espaço de chaves cresce exponencialmente (2ⁿ): mais bits = muito mais combinações a testar.</div></details>
+    </div>
+  </div>
+</section>
+
+<section class="modulo b16" id="mod16">
+  <span class="mod-tag c16">Módulo 16</span>
+  <h2>🧬 Integridade e Autenticidade Básicas</h2>
+  <p class="objetivo">Objetivo do módulo: explicar como funções de hash, HMAC e o gerenciamento de chaves garantem integridade, autenticidade e confidencialidade.</p>
+
+  <h3>16.1 — Integridade e autenticidade</h3>
+  <h4>Funções de hash criptográfico</h4>
+  <div class="conceito"><b class="titulo">📌 O que é um hash</b>
+  Uma função de <b>hash</b> recebe uma entrada de qualquer tamanho e produz uma saída de <b>tamanho fixo</b> (o resumo/<i>digest</i>). Propriedades: é <b>unidirecional</b> (não dá para reverter), a mesma entrada gera sempre o mesmo hash, e qualquer mudança mínima na entrada muda <b>completamente</b> a saída (efeito avalanche).</div>
+  <div class="tabela-wrap"><table>
+    <tr><th>Algoritmo</th><th>Tamanho do digest</th><th>Status</th></tr>
+    <tr><td><b>MD5</b></td><td>128 bits</td><td>Legado — <b>vulnerável a colisões</b>, evitar</td></tr>
+    <tr><td><b>SHA-1</b></td><td>160 bits</td><td>Descontinuado (colisões demonstradas)</td></tr>
+    <tr><td><b>SHA-2</b> (ex.: SHA-256)</td><td>224–512 bits</td><td><b>Recomendado</b> atualmente</td></tr>
+  </table></div>
+  <div class="atencao"><b class="titulo">⚠️ Hash sozinho NÃO autentica</b>
+  Um hash puro garante integridade contra <b>erros acidentais</b>, mas não contra um atacante: se ele altera a mensagem, basta recalcular o hash. É um ataque <b>man-in-the-middle</b>. Falta provar <b>quem</b> gerou o resumo — é aí que entra o HMAC.</div>
+  <h4>HMAC (Hash + chave secreta)</h4>
+  <div class="conceito"><b class="titulo">📌 HMAC</b>
+  O <b>HMAC (Keyed-Hash Message Authentication Code)</b> combina a mensagem com uma <b>chave secreta compartilhada</b> antes de aplicar o hash. Resultado: além de <b>integridade</b>, prova a <b>autenticidade da origem</b> (só quem tem a chave gera o HMAC correto). Um atacante sem a chave não consegue forjar um resumo válido.</div>
+  <div class="analogia"><b class="titulo">🔏 Analogia</b>
+  Hash comum = um <b>lacre genérico</b> que qualquer um pode refazer. HMAC = um <b>lacre com o seu carimbo pessoal secreto</b>: mesmo que rompam, ninguém reproduz o carimbo sem o seu segredo.</div>
+
+  <h3>16.2 — Gerenciamento de chaves</h3>
+  <p>A criptografia é tão forte quanto o cuidado com as chaves. Características do gerenciamento de chaves:</p>
+  <ul>
+    <li><b>Geração</b> — chaves devem ser <b>aleatórias e fortes</b>.</li>
+    <li><b>Verificação</b> — garantir que a chave é válida e não foi adulterada.</li>
+    <li><b>Troca (exchange)</b> — combinar a chave de forma segura (ex.: <b>Diffie-Hellman</b>).</li>
+    <li><b>Armazenamento</b> — proteger a chave em repouso.</li>
+    <li><b>Revogação e destruição</b> — invalidar chaves comprometidas e descartá-las com segurança.</li>
+  </ul>
+  <h4>Tipos de chave / comprimento</h4>
+  <ul>
+    <li><b>Chaves simétricas</b> — geralmente mais curtas, trocadas com frequência.</li>
+    <li><b>Chaves assimétricas</b> — bem mais longas (ex.: RSA 2048+), pois o problema matemático é diferente.</li>
+    <li>Regra geral: <b>quanto mais longa a chave, mais segura</b> (e mais custosa em processamento).</li>
+  </ul>
+  <div class="conceito"><b class="titulo">📌 Diffie-Hellman (DH)</b>
+  Algoritmo que permite a <b>dois lados criarem uma chave secreta compartilhada através de um canal público</b>, sem nunca transmitir a chave em si. É a base da troca de chaves em IPsec/VPNs (módulo 18). Não serve para cifrar dados — serve para <b>acordar a chave</b>.</div>
+
+  <h3>16.3 — Confidencialidade: simétrica × assimétrica</h3>
+  <div class="tabela-wrap"><table>
+    <tr><th></th><th>Criptografia Simétrica</th><th>Criptografia Assimétrica</th></tr>
+    <tr><td><b>Chaves</b></td><td><b>Uma</b> chave compartilhada (cifra e decifra)</td><td><b>Par</b> de chaves: pública + privada</td></tr>
+    <tr><td><b>Velocidade</b></td><td><b>Rápida</b> — ideal para grandes volumes</td><td><b>Lenta</b> (100–1000× mais)</td></tr>
+    <tr><td><b>Comprimento típico</b></td><td>40–256 bits</td><td>512–4096 bits</td></tr>
+    <tr><td><b>Exemplos</b></td><td><b>DES, 3DES, AES</b>, SEAL, RC4</td><td><b>RSA, DH</b>, ElGamal, ECC</td></tr>
+    <tr><td><b>Desafio</b></td><td>Distribuir a chave com segurança</td><td>Desempenho; precisa de PKI</td></tr>
+    <tr><td><b>Uso comum</b></td><td>Cifrar os <b>dados</b> da sessão</td><td>Trocar a chave simétrica e <b>assinar</b></td></tr>
+  </table></div>
+  <div class="dica"><b class="titulo">💡 O "casamento" dos dois (modelo híbrido)</b>
+  Na prática (HTTPS, VPN) usam-se os dois juntos: a <b>assimétrica</b> (lenta, mas resolve a troca de chave) é usada só para <b>combinar com segurança uma chave simétrica</b>; depois a <b>simétrica</b> (rápida) cifra todo o tráfego. O melhor dos dois mundos.</div>
+  <div class="atencao"><b class="titulo">⚠️ Não confunda</b>
+  Cifrar com a <b>chave pública</b> do destinatário ➜ só a <b>privada dele</b> abre = <b>confidencialidade</b>. Cifrar (assinar) com a <b>própria chave privada</b> ➜ qualquer um confere com a <b>pública</b> = <b>autenticação/não repúdio</b> (assunto do módulo 17).</div>
+
+  <div class="quiz">
+    <h3>🧠 Mini-quiz — Módulo 16</h3>
+    <div class="pergunta">
+      <p class="enunciado">1) O que o HMAC adiciona a uma simples função de hash?</p>
+      <button class="opcao" onclick="resp(this,false)">Maior velocidade de cálculo</button>
+      <button class="opcao" data-ok="1" onclick="resp(this,true)">Autenticação da origem, via chave secreta compartilhada</button>
+      <button class="opcao" onclick="resp(this,false)">Confidencialidade total dos dados</button>
+      <details class="explica"><summary>Ver explicação</summary><div>O HMAC mistura uma chave secreta ao hash: além de detectar alteração, prova que o resumo veio de quem conhece a chave.</div></details>
+    </div>
+    <div class="pergunta">
+      <p class="enunciado">2) Para cifrar grandes volumes de dados com bom desempenho, usa-se:</p>
+      <button class="opcao" data-ok="1" onclick="resp(this,true)">Criptografia simétrica (ex.: AES)</button>
+      <button class="opcao" onclick="resp(this,false)">Criptografia assimétrica (ex.: RSA)</button>
+      <button class="opcao" onclick="resp(this,false)">Função de hash (ex.: SHA-256)</button>
+      <details class="explica"><summary>Ver explicação</summary><div>A simétrica é muito mais rápida; a assimétrica costuma só trocar a chave simétrica e assinar.</div></details>
+    </div>
+    <div class="pergunta">
+      <p class="enunciado">3) Diffie-Hellman é usado para:</p>
+      <button class="opcao" onclick="resp(this,false)">Cifrar diretamente os dados da sessão</button>
+      <button class="opcao" data-ok="1" onclick="resp(this,true)">Acordar uma chave secreta compartilhada por canal público</button>
+      <button class="opcao" onclick="resp(this,false)">Gerar o hash da mensagem</button>
+      <details class="explica"><summary>Ver explicação</summary><div>DH é um protocolo de troca de chaves: os lados derivam um segredo comum sem transmitir a chave. Base do IPsec.</div></details>
+    </div>
+  </div>
+</section>
+
+<section class="modulo b17" id="mod17">
+  <span class="mod-tag c17">Módulo 17</span>
+  <h2>🔑 Criptografia de Chave Pública</h2>
+  <p class="objetivo">Objetivo do módulo: explicar a criptografia de chave pública, as assinaturas digitais, as autoridades de certificação e a infraestrutura de chave pública (PKI).</p>
+
+  <h3>17.1 — Chave pública e assinaturas digitais</h3>
+  <div class="conceito"><b class="titulo">📌 O par de chaves</b>
+  Cada usuário tem <b>duas chaves matematicamente ligadas</b>: a <b>pública</b> (pode ser distribuída livremente) e a <b>privada</b> (mantida em segredo absoluto). O que uma cifra, <b>só a outra do par</b> decifra. A partir da pública é <b>inviável</b> calcular a privada.</div>
+  <div class="tabela-wrap"><table>
+    <tr><th>Objetivo</th><th>Cifra-se com…</th><th>Decifra/verifica-se com…</th><th>Garante</th></tr>
+    <tr><td><b>Confidencialidade</b></td><td>Chave <b>pública do destinatário</b></td><td>Chave <b>privada do destinatário</b></td><td>Só o destinatário lê</td></tr>
+    <tr><td><b>Autenticação / Não repúdio</b></td><td>Chave <b>privada do remetente</b> (assina)</td><td>Chave <b>pública do remetente</b></td><td>Prova quem enviou</td></tr>
+  </table></div>
+
+  <h4>Como funciona a assinatura digital</h4>
+  <div class="fluxo">
+    <span class="et">1. Gera-se o <b>hash</b><br>da mensagem</span><span class="seta">➜</span>
+    <span class="et">2. Cifra-se o hash com a<br><b>chave privada</b> do remetente<br>(= assinatura)</span><span class="seta">➜</span>
+    <span class="et">3. Envia mensagem<br>+ assinatura</span><span class="seta">➜</span>
+    <span class="et">4. Destinatário decifra a assinatura<br>com a <b>chave pública</b> e compara<br>com o hash que ele mesmo calcula</span>
+  </div>
+  <p>Se os hashes <b>coincidem</b>: a mensagem está <b>íntegra</b> (não mudou) e foi mesmo <b>assinada por quem tem a chave privada</b> (autenticidade + não repúdio). Algoritmos: <b>RSA</b>, <b>DSA</b>, <b>ECDSA</b>.</p>
+  <div class="analogia"><b class="titulo">✍️ Analogia</b>
+  A assinatura digital é como assinar um contrato com uma <b>caneta que só você possui</b>: todos podem <b>conferir</b> que a assinatura é sua (chave pública), mas ninguém consegue <b>reproduzi-la</b> (precisaria da sua chave privada).</div>
+
+  <h3>17.2 — Autoridades e o sistema de confiança PKI</h3>
+  <div class="atencao"><b class="titulo">⚠️ O problema da chave pública</b>
+  Como saber se aquela "chave pública do banco" é realmente do banco — e não de um impostor? Resposta: alguém <b>confiável</b> precisa garantir o vínculo entre a chave e a identidade. Esse é o papel da <b>PKI</b>.</div>
+  <div class="conceito"><b class="titulo">📌 Componentes da PKI</b>
+  <ul>
+    <li><b>Certificado digital</b> — documento que <b>liga uma identidade a uma chave pública</b> (padrão <b>X.509</b>). Contém nome, chave pública, validade e a assinatura da CA.</li>
+    <li><b>CA (Autoridade de Certificação)</b> — entidade <b>confiável</b> que emite e <b>assina</b> os certificados (ex.: DigiCert, Sectigo). É a "âncora de confiança".</li>
+    <li><b>RA (Autoridade de Registro)</b> — verifica a identidade do solicitante antes de a CA emitir.</li>
+    <li><b>CRL / OCSP</b> — mecanismos para verificar se um certificado foi <b>revogado</b>.</li>
+  </ul></div>
+  <h4>Topologias de confiança</h4>
+  <ul>
+    <li><b>CA única</b> — uma autoridade emite todos os certificados.</li>
+    <li><b>Hierárquica</b> — uma <b>Root CA</b> assina <b>CAs subordinadas</b>, formando uma cadeia de confiança (o modelo mais comum).</li>
+    <li><b>Cruzada (cross-certification)</b> — CAs independentes reconhecem umas às outras.</li>
+  </ul>
+  <div class="dica"><b class="titulo">💡 Cadeia de confiança na prática (HTTPS)</b>
+  Seu navegador já confia em um conjunto de <b>Root CAs</b>. Quando acessa um site HTTPS, ele recebe o certificado do servidor, verifica a <b>assinatura da CA</b> que o emitiu e sobe a cadeia até uma Root confiável. Se tudo bate, aparece o <b>cadeado</b> 🔒.</div>
+
+  <h3>17.3 — Aplicações e impactos da criptografia</h3>
+  <h4>Onde a criptografia aparece</h4>
+  <ul>
+    <li><b>SSL/TLS</b> — HTTPS, e-mail seguro, qualquer canal web protegido.</li>
+    <li><b>IPsec</b> — VPNs site-a-site e de acesso remoto (módulo 18).</li>
+    <li><b>SSH</b> — administração remota segura.</li>
+    <li><b>Assinatura de código e documentos</b>, <b>PGP/GPG</b> para e-mail.</li>
+  </ul>
+  <div class="atencao"><b class="titulo">⚠️ O lado do defensor: criptografia também atrapalha a análise</b>
+  Como o tráfego cifrado <b>não pode ser inspecionado</b> em conteúdo, atacantes escondem malware e exfiltração dentro de TLS. Defensores recorrem a <b>SSL/TLS inspection</b> (descriptografia controlada em um ponto confiável) e à análise de metadados. Há também a preocupação de <b>longo prazo</b> com a <b>computação quântica</b>, que ameaça algoritmos assimétricos atuais (motivando a criptografia pós-quântica).</div>
+
+  <div class="quiz">
+    <h3>🧠 Mini-quiz — Módulo 17</h3>
+    <div class="pergunta">
+      <p class="enunciado">1) Para enviar uma mensagem confidencial a Bob, Alice cifra com qual chave?</p>
+      <button class="opcao" data-ok="1" onclick="resp(this,true)">A chave pública de Bob</button>
+      <button class="opcao" onclick="resp(this,false)">A chave privada de Alice</button>
+      <button class="opcao" onclick="resp(this,false)">A chave pública de Alice</button>
+      <details class="explica"><summary>Ver explicação</summary><div>Cifrando com a pública de Bob, somente a privada de Bob (que só ele tem) consegue abrir = confidencialidade.</div></details>
+    </div>
+    <div class="pergunta">
+      <p class="enunciado">2) Numa assinatura digital, o remetente cifra o hash com:</p>
+      <button class="opcao" data-ok="1" onclick="resp(this,true)">A própria chave privada</button>
+      <button class="opcao" onclick="resp(this,false)">A chave pública do destinatário</button>
+      <button class="opcao" onclick="resp(this,false)">Uma chave simétrica compartilhada</button>
+      <details class="explica"><summary>Ver explicação</summary><div>Só o dono da privada pode gerar a assinatura; qualquer um confere com a pública dele — garantindo autenticidade e não repúdio.</div></details>
+    </div>
+    <div class="pergunta">
+      <p class="enunciado">3) Qual entidade da PKI emite e assina os certificados digitais?</p>
+      <button class="opcao" onclick="resp(this,false)">RA (Autoridade de Registro)</button>
+      <button class="opcao" data-ok="1" onclick="resp(this,true)">CA (Autoridade de Certificação)</button>
+      <button class="opcao" onclick="resp(this,false)">CRL (Lista de Revogação)</button>
+      <details class="explica"><summary>Ver explicação</summary><div>A CA é a âncora de confiança: assina o certificado vinculando identidade ↔ chave pública. A RA só verifica a identidade; a CRL lista revogados.</div></details>
+    </div>
+  </div>
+</section>
+
+<section class="modulo b18" id="mod18">
+  <span class="mod-tag c18">Módulo 18</span>
+  <h2>🌐 VPNs (Redes Privadas Virtuais)</h2>
+  <p class="objetivo">Objetivo do módulo: explicar como as VPNs protegem o tráfego, suas topologias e o funcionamento do framework IPsec.</p>
+
+  <h3>18.1 — Visão geral de VPN</h3>
+  <div class="conceito"><b class="titulo">📌 O que é uma VPN</b>
+  Uma <b>VPN (Virtual Private Network)</b> cria um <b>túnel seguro</b> sobre uma rede pública (a Internet), de modo que dois pontos se comuniquem como se estivessem na mesma rede privada. Os dados são <b>encapsulados</b> e geralmente <b>criptografados</b>, garantindo confidencialidade, integridade e autenticação.</div>
+  <div class="analogia"><b class="titulo">🚇 Analogia</b>
+  Sem VPN, mandar dados pela Internet é como enviar um <b>cartão-postal</b> (qualquer um no caminho lê). Com VPN, é um <b>túnel blindado</b>: a carga viaja pela mesma estrada pública, mas dentro de um corredor que ninguém vê nem acessa.</div>
+  <h4>Benefícios</h4>
+  <ul>
+    <li><b>Economia</b> — usa a Internet em vez de links dedicados caros (WAN privada).</li>
+    <li><b>Escalabilidade</b> — adicionar novos sites/usuários é simples.</li>
+    <li><b>Segurança</b> — criptografia e autenticação dos dados em trânsito.</li>
+    <li><b>Compatibilidade</b> — funciona sobre qualquer acesso à Internet (banda larga, 4G/5G).</li>
+  </ul>
+
+  <h3>18.2 — Topologias de VPN</h3>
+  <div class="tabela-wrap"><table>
+    <tr><th>Tipo</th><th>Quem conecta</th><th>Característica</th></tr>
+    <tr><td><b>Site-a-Site</b></td><td>Rede ↔ Rede (ex.: matriz ↔ filial)</td><td>Os <b>gateways</b> (roteadores/ASA) cuidam de tudo; os hosts <b>não sabem</b> da VPN. Túnel sempre ativo.</td></tr>
+    <tr><td><b>Acesso Remoto</b></td><td>Usuário ↔ Rede (ex.: home office)</td><td>Criada <b>sob demanda</b> pelo cliente VPN do usuário. Comum com <b>SSL/TLS</b> (ex.: Cisco AnyConnect).</td></tr>
+  </table></div>
+  <h4>VPNs empresariais × de provedor</h4>
+  <ul>
+    <li><b>Empresariais</b>: gerenciadas pela própria empresa — <b>IPsec</b> (site-a-site e acesso remoto) e <b>SSL VPN</b>.</li>
+    <li><b>De provedor (SP)</b>: oferecidas pela operadora — <b>MPLS</b> (L2 e L3 VPN), por exemplo.</li>
+  </ul>
+  <div class="conceito"><b class="titulo">📌 GRE e DMVPN (menção do curso)</b>
+  <b>GRE</b> é um protocolo de tunelamento que encapsula vários protocolos (inclusive multicast/roteamento), mas <b>não criptografa</b> — costuma ser combinado com IPsec. <b>DMVPN</b> permite criar VPNs <b>hub-and-spoke dinâmicas e escaláveis</b>, com túneis spoke-a-spoke sob demanda.</div>
+
+  <h3>18.3 — Visão geral do IPsec</h3>
+  <div class="conceito"><b class="titulo">📌 IPsec</b>
+  O <b>IPsec</b> é um <b>framework</b> (padrão IETF) de serviços de segurança na <b>camada 3 (rede)</b>. Ele não amarra algoritmos fixos: é <b>modular</b>, permitindo escolher as melhores opções para cada serviço.</div>
+  <h4>Os 4 blocos que você precisa escolher</h4>
+  <div class="tabela-wrap"><table>
+    <tr><th>Serviço</th><th>Opções (exemplos)</th></tr>
+    <tr><td><b>Confidencialidade</b> (criptografia)</td><td>DES, 3DES, <b>AES</b>, SEAL</td></tr>
+    <tr><td><b>Integridade</b> (hash)</td><td>MD5, <b>SHA</b></td></tr>
+    <tr><td><b>Autenticação</b></td><td><b>PSK</b> (chave pré-compartilhada) ou <b>RSA</b> (certificados)</td></tr>
+    <tr><td><b>Troca de chave segura</b></td><td><b>Diffie-Hellman</b> (grupos DH 14, 19, 20, 21, 24…)</td></tr>
+  </table></div>
+  <div class="dica"><b class="titulo">💡 Mnemônico do IPsec: "C-I-A-DH"</b>
+  <b>C</b>onfidencialidade (cripto) · <b>I</b>ntegridade (hash) · <b>A</b>utenticação (PSK/RSA) · troca de chave (<b>DH</b>). Sempre prefira os mais fortes disponíveis: AES > 3DES > DES; SHA > MD5; RSA/certificados > PSK; grupos DH maiores.</div>
+
+  <h3>18.4 — Protocolos IPsec: AH × ESP</h3>
+  <div class="tabela-wrap"><table>
+    <tr><th></th><th>AH (Authentication Header) — protocolo 51</th><th>ESP (Encapsulating Security Payload) — protocolo 50 ⭐</th></tr>
+    <tr><td><b>Integridade/autenticação</b></td><td>Sim (de todo o pacote)</td><td>Sim</td></tr>
+    <tr><td><b>Confidencialidade (cripto)</b></td><td><b>NÃO criptografa</b></td><td><b>Sim — criptografa</b> os dados</td></tr>
+    <tr><td><b>Uso</b></td><td>Raro (não dá sigilo)</td><td><b>O mais usado</b> (sigilo + integridade)</td></tr>
+  </table></div>
+  <h4>Modos de operação</h4>
+  <ul>
+    <li><b>Modo transporte</b> — criptografa só a <b>carga (payload)</b>; mantém o cabeçalho IP original. Usado host-a-host.</li>
+    <li><b>Modo túnel</b> ⭐ — criptografa o <b>pacote IP inteiro</b> e adiciona um novo cabeçalho. Usado em VPNs site-a-site (esconde os IPs internos).</li>
+  </ul>
+
+  <h3>18.5 — Internet Key Exchange (IKE)</h3>
+  <div class="conceito"><b class="titulo">📌 IKE</b>
+  O <b>IKE</b> é o protocolo que <b>negocia e estabelece as SAs (Security Associations)</b> — os "acordos" sobre quais algoritmos e chaves o túnel IPsec vai usar. Ele automatiza a troca de chaves (apoiado em Diffie-Hellman), evitando configuração manual.</div>
+  <div class="fluxo">
+    <span class="et"><b>IKE Fase 1</b><br><small>cria um canal seguro (túnel ISAKMP)<br>e autentica os pares</small></span>
+    <span class="seta">➜</span>
+    <span class="et"><b>IKE Fase 2</b><br><small>negocia as SAs do IPsec<br>(como os dados serão protegidos)</small></span>
+    <span class="seta">➜</span>
+    <span class="et"><b>Túnel IPsec ativo</b><br><small>dados fluem cifrados (ESP)</small></span>
+  </div>
+  <div class="dica"><b class="titulo">💡 Ligando os módulos</b>
+  Repare como o módulo 18 <b>usa tudo o que veio antes</b>: criptografia simétrica (15/16) cifra os dados, hash/HMAC (16) garante integridade, chave pública/certificados (17) autenticam os pares, e Diffie-Hellman (16) troca as chaves. A VPN é a aplicação prática da criptografia.</div>
+
+  <div class="quiz">
+    <h3>🧠 Mini-quiz — Módulo 18</h3>
+    <div class="pergunta">
+      <p class="enunciado">1) Qual protocolo IPsec fornece criptografia (confidencialidade) dos dados?</p>
+      <button class="opcao" onclick="resp(this,false)">AH (Authentication Header)</button>
+      <button class="opcao" data-ok="1" onclick="resp(this,true)">ESP (Encapsulating Security Payload)</button>
+      <button class="opcao" onclick="resp(this,false)">Ambos criptografam igualmente</button>
+      <details class="explica"><summary>Ver explicação</summary><div>O AH só autentica/garante integridade; o ESP também criptografa. Por isso o ESP é o mais usado em VPNs.</div></details>
+    </div>
+    <div class="pergunta">
+      <p class="enunciado">2) Em uma VPN site-a-site, quem estabelece e mantém o túnel?</p>
+      <button class="opcao" data-ok="1" onclick="resp(this,true)">Os gateways (roteadores/ASA) das duas pontas</button>
+      <button class="opcao" onclick="resp(this,false)">Cada host individualmente, sob demanda</button>
+      <button class="opcao" onclick="resp(this,false)">O provedor de Internet</button>
+      <details class="explica"><summary>Ver explicação</summary><div>Na site-a-site os gateways cuidam de tudo de forma transparente; os hosts internos nem sabem que há uma VPN.</div></details>
+    </div>
+    <div class="pergunta">
+      <p class="enunciado">3) Qual algoritmo do framework IPsec é responsável pela troca segura de chaves?</p>
+      <button class="opcao" onclick="resp(this,false)">AES</button>
+      <button class="opcao" onclick="resp(this,false)">SHA</button>
+      <button class="opcao" data-ok="1" onclick="resp(this,true)">Diffie-Hellman</button>
+      <details class="explica"><summary>Ver explicação</summary><div>AES cifra, SHA garante integridade e o Diffie-Hellman estabelece a chave compartilhada sobre o canal público.</div></details>
+    </div>
+  </div>
+</section>
+
+<section class="modulo" id="glossario" style="border-top:5px solid #64748b;">
+  <span class="mod-tag" style="background:#64748b;">Apoio</span>
+  <h2>📚 Glossário rápido</h2>
+  <p>Termos-chave dos oito módulos, para revisão de última hora.</p>
+  <dl class="glossario">
+    <dt>ACL (Access Control List)</dt><dd>Lista de regras que permite ou nega tráfego com base em endereços, portas e protocolos. Base da filtragem de pacotes.</dd>
+    <dt>AH / ESP</dt><dd>Protocolos do IPsec. AH = autenticação/integridade (sem criptografia); ESP = autenticação + criptografia (o mais usado).</dd>
+    <dt>BPDU Guard</dt><dd>Desativa (err-disabled) uma porta PortFast que receba um BPDU; protege contra ataques de STP.</dd>
+    <dt>CA (Autoridade de Certificação)</dt><dd>Entidade confiável que emite e assina certificados digitais na PKI.</dd>
+    <dt>DAI (Dynamic ARP Inspection)</dt><dd>Valida pacotes ARP contra a binding table do DHCP snooping; mitiga ARP poisoning.</dd>
+    <dt>DHCP Snooping</dt><dd>Classifica portas em confiáveis/não confiáveis e bloqueia servidores DHCP falsos; cria a binding table.</dd>
+    <dt>Diffie-Hellman (DH)</dt><dd>Algoritmo de troca de chaves que cria um segredo compartilhado por canal público.</dd>
+    <dt>DMZ</dt><dd>Zona intermediária que hospeda serviços públicos (web, e-mail), isolando-os da rede interna.</dd>
+    <dt>HMAC</dt><dd>Hash combinado com chave secreta — garante integridade E autenticidade da origem.</dd>
+    <dt>IDS / IPS</dt><dd>IDS detecta e alerta (offline, via SPAN); IPS detecta e bloqueia (inline).</dd>
+    <dt>IKE</dt><dd>Protocolo que negocia as SAs e automatiza a troca de chaves do IPsec (Fase 1 e Fase 2).</dd>
+    <dt>IPsec</dt><dd>Framework de segurança na camada 3 para VPNs: confidencialidade, integridade, autenticação e troca de chave.</dd>
+    <dt>NGFW</dt><dd>Firewall de próxima geração: stateful + IPS integrado + controle por aplicação.</dd>
+    <dt>PKI</dt><dd>Infraestrutura de chave pública: CAs, certificados X.509 e mecanismos de confiança/revogação.</dd>
+    <dt>Port Security</dt><dd>Limita quantos/quais MACs usam uma porta de acesso; mitiga MAC flooding.</dd>
+    <dt>SPAN / RSPAN</dt><dd>Espelhamento de portas que copia o tráfego para um sensor IDS/analisador (RSPAN = entre switches).</dd>
+    <dt>Stateful Firewall</dt><dd>Firewall que mantém tabela de estado das conexões e libera o tráfego de retorno automaticamente.</dd>
+    <dt>VLAN Hopping</dt><dd>Ataque que permite acessar VLANs indevidas (spoofing de switch ou double-tagging).</dd>
+    <dt>VPN</dt><dd>Túnel seguro sobre rede pública. Tipos: site-a-site (gateways) e acesso remoto (cliente).</dd>
+    <dt>ZPF</dt><dd>Zone-Based Policy Firewall: política aplicada entre zonas de interfaces (ações inspect/drop/pass).</dd>
+  </dl>
+</section>
+
+<footer style="text-align:center; color:var(--muted); font-size:.85rem; padding:20px 0;">
+  Guia de estudo gerado para revisão pessoal — baseado na estrutura do curso <i>Network Security 1.0</i> (Cisco Networking Academy).<br>
+  Bons estudos, Rafael! 🚀
+</footer>
+
+</main>
+</div>
+
+<button id="topo-btn" title="Voltar ao topo" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑</button>
+
+<script>
+// Barra de progresso + botão topo
+window.addEventListener('scroll', () => {
+  const h = document.documentElement;
+  const p = (h.scrollTop) / (h.scrollHeight - h.clientHeight) * 100;
+  document.getElementById('progresso').style.width = p + '%';
+  document.getElementById('topo-btn').style.display = h.scrollTop > 600 ? 'block' : 'none';
+});
+// Destaque do menu conforme rolagem
+const secoes = document.querySelectorAll('section.modulo, header.hero');
+const links = document.querySelectorAll('nav#menu a');
+const obs = new IntersectionObserver(entries => {
+  entries.forEach(e => {
+    if (e.isIntersecting) {
+      links.forEach(l => l.classList.toggle('ativo', l.getAttribute('href') === '#' + e.target.id));
+    }
+  });
+}, {rootMargin:'-30% 0px -60% 0px'});
+secoes.forEach(s => obs.observe(s));
+// Quiz
+function resp(btn, certa){
+  const irmaos = btn.parentElement.querySelectorAll('.opcao');
+  irmaos.forEach(o => {o.classList.remove('certa','errada');});
+  btn.classList.add(certa ? 'certa' : 'errada');
+  if(!certa){
+    // destaca também a correta após errar
+    irmaos.forEach(o => { if(o.dataset.ok === '1') o.classList.add('certa'); });
+  }
+}
+</script>
+</body>
+</html>
