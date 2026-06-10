@@ -52,6 +52,8 @@
   .dica b.titulo{color:var(--verde);}
   .atencao{background:#fdeef0; border-color:#f6c9cf;}
   .atencao b.titulo{color:var(--vermelho);}
+  .prova{background:#fdf8ec; border-color:#ead9a8;}
+  .prova b.titulo{color:#9a7b1e;}
   /* Tabelas */
   .tabela-wrap{overflow-x:auto; margin:14px 0;}
   table{width:100%; border-collapse:collapse; font-size:.92rem; background:#fff;}
@@ -74,8 +76,13 @@
   .pergunta p.enunciado{font-weight:600; margin-bottom:10px;}
   .opcao{display:block; width:100%; text-align:left; background:#f7f9fc; border:1px solid var(--borda); border-radius:9px; padding:9px 12px; margin:6px 0; cursor:pointer; font-size:.92rem; font-family:inherit; color:var(--ink); transition:.15s;}
   .opcao:hover{border-color:var(--azul); background:#eef4ff;}
-  .opcao.certa{background:#d9f3e3 !important; border-color:var(--verde) !important; font-weight:600;}
-  .opcao.errada{background:#fbdfe3 !important; border-color:var(--vermelho) !important;}
+  .opcao.certa{background:#d9f3e3 !important; border-color:var(--verde) !important; font-weight:600; border-width:2px;}
+  .opcao.errada{background:#fbdfe3 !important; border-color:var(--vermelho) !important; border-width:2px;}
+  /* Símbolos para acessibilidade (daltonismo): não depender só da cor */
+  .opcao.certa::before{content:"✔ "; font-weight:900;}
+  .opcao.errada::before{content:"✘ "; font-weight:900;}
+  .opcao.certa::after{content:"  — CORRETA"; font-size:.78em; font-weight:800; letter-spacing:.05em;}
+  .opcao.errada::after{content:"  — ERRADA"; font-size:.78em; font-weight:800; letter-spacing:.05em;}
   details.explica{margin-top:8px; font-size:.9rem;}
   details.explica summary{cursor:pointer; color:var(--roxo); font-weight:600;}
   details.explica div{background:#fbfaff; border-left:3px solid var(--roxo); padding:10px 14px; margin-top:8px; border-radius:0 8px 8px 0;}
@@ -108,6 +115,8 @@
   body.dark .analogia{background:#2b2113; border-color:#5d4521;}
   body.dark .dica{background:#11271b; border-color:#1f4d33;}
   body.dark .atencao{background:#2c151a; border-color:#5a2630;}
+  body.dark .prova{background:#28221060; background:#282210; border-color:#5c4e1f;}
+  body.dark .prova b.titulo{color:#e3c45e;}
   body.dark .quiz{background:#1d1a2e; border-color:#3a3458;}
   body.dark .pergunta{background:#16202f; border-color:#2a3a50;}
   body.dark .opcao{background:#1b2738; border-color:#2a3a50; color:var(--ink);}
@@ -672,6 +681,23 @@
 <span class="cm">spanning-tree portfast bpduguard default</span></pre>
   <div class="dica"><b class="titulo">💡 Dica de prova — qual recurso para qual ataque?</b>
   MAC flooding ➜ <b>Port Security</b>; VLAN hopping ➜ <b>desativar DTP + VLAN nativa dedicada</b>; DHCP spoofing/starvation ➜ <b>DHCP Snooping</b>; ARP poisoning ➜ <b>DAI</b>; IP/MAC spoofing ➜ <b>IP Source Guard</b>; manipulação do STP ➜ <b>BPDU Guard / Root Guard</b>.</div>
+
+  <h3>📝 Questão de prova resolvida (relacionar colunas)</h3>
+  <div class="box prova">
+    <b class="titulo">Enunciado (valor 1,5 — 0,25 cada)</b>
+    Em relação às vulnerabilidades da camada 2, relacione a coluna da esquerda (ataques de camada 2) com a da direita (mitigação de ataques de camada 2).
+    <div class="tabela-wrap"><table>
+      <tr><th>Ataques (esquerda)</th><th>Resposta</th><th>Mitigações (direita)</th><th>Por quê</th></tr>
+      <tr><td>I — Ataques de tabela MAC</td><td style="text-align:center;"><b>( V )</b></td><td>IPSG (IP Source Guard, proteção de origem IP)</td><td>O IPSG valida IP/MAC de origem contra a binding table ➜ combate <b>falsificação de endereços (V)</b></td></tr>
+      <tr><td>II — Ataques a VLAN</td><td style="text-align:center;"><b>( IV )</b></td><td>Dynamic ARP Inspection (DAI)</td><td>O DAI valida pacotes ARP ➜ combate <b>ataques ARP (IV)</b></td></tr>
+      <tr><td>III — Ataques DHCP</td><td style="text-align:center;"><b>( III )</b></td><td>Rastreamento de DHCP (snooping)</td><td>Bloqueia servidor DHCP falso e starvation ➜ <b>ataques DHCP (III)</b></td></tr>
+      <tr><td>IV — Ataques ARP</td><td style="text-align:center;"><b>( I )</b></td><td>Segurança de portas (port security)</td><td>Limita MACs por porta ➜ combate <b>flooding da tabela MAC (I)</b></td></tr>
+      <tr><td>V — Falsificação de endereços</td><td style="text-align:center;"><b>( II )</b></td><td>Desativar o entroncamento em portas de acesso e o entroncamento automático (DTP)</td><td>Sem trunk negociado não há VLAN hopping ➜ <b>ataques a VLAN (II)</b></td></tr>
+      <tr><td>VI — Ataques STP</td><td style="text-align:center;"><b>( VI )</b></td><td>Aplicação do BPDU Guard nas portas de acesso</td><td>Porta de acesso que recebe BPDU é desativada ➜ <b>ataques STP (VI)</b></td></tr>
+    </table></div>
+    <b>Sequência correta (de cima para baixo): V, IV, III, I, II, VI.</b>
+    <p style="margin-top:8px;">⚠️ Armadilha clássica: a coluna da direita vem <b>embaralhada</b> — não relacione "na ordem". Leia cada <b>mitigação</b> e pergunte: <i>"essa ferramenta protege contra o quê?"</i>. Cuidado especial com os pares que se confundem: IPSG protege contra <b>spoofing de endereço</b> (não tabela MAC) e quem protege a tabela MAC é o <b>port security</b>.</p>
+  </div>
 
   <div class="quiz">
     <h3>🧠 Mini-quiz — Módulo 14</h3>
