@@ -184,6 +184,7 @@
   <a href="#mod18">18 · VPNs</a>
   <div class="secao">Apoio</div>
   <a href="#glossario">Glossário rápido</a>
+  <a href="#simulado">🎯 Simulado final — 30 questões</a>
 </nav>
 
 <main>
@@ -1102,6 +1103,227 @@
   </dl>
 </section>
 
+<section class="modulo" id="simulado" style="border-top:5px solid var(--roxo);">
+  <span class="mod-tag" style="background:var(--roxo);">Simulado final</span>
+  <h2>🎯 Simulado — 30 questões de revisão geral</h2>
+  <p class="objetivo">Questões cobrindo os módulos 9, 10, 11, 14, 15, 16, 17 e 18. Responda na ordem que quiser — o placar conta apenas a sua <b>primeira tentativa</b> em cada questão, como numa prova de verdade.</p>
+  <div class="dica"><b class="titulo">📊 Placar</b>
+    <span id="sim-placar" style="font-size:1.05rem; font-weight:700;">Respondidas: 0/30 · Acertos: 0</span>
+    <button onclick="location.reload()" style="margin-left:14px; background:var(--roxo); color:#fff; border:none; border-radius:8px; padding:6px 14px; cursor:pointer; font-family:inherit;">↺ Refazer simulado</button>
+  </div>
+
+  <div class="pergunta"><p class="enunciado">1) [Mód. 9] Qual é uma propriedade comum a todos os firewalls?</p>
+    <button class="opcao" onclick="resp(this,false)">Substituem o antivírus dos hosts internos</button>
+    <button class="opcao" data-ok="1" onclick="resp(this,true)">São o único ponto de trânsito entre as redes interna e externa</button>
+    <button class="opcao" onclick="resp(this,false)">Autenticam individualmente cada usuário da rede</button>
+    <button class="opcao" onclick="resp(this,false)">Aumentam a velocidade do tráfego que os atravessa</button>
+    <details class="explica"><summary>Ver explicação</summary><div>As três propriedades: resistente a ataques, único ponto de trânsito e aplicação da política de controle de acesso.</div></details>
+  </div>
+  <div class="pergunta"><p class="enunciado">2) [Mód. 9] Qual limitação é característica do firewall de filtragem de pacotes (stateless)?</p>
+    <button class="opcao" onclick="resp(this,false)">Alto impacto no desempenho da rede</button>
+    <button class="opcao" onclick="resp(this,false)">Não consegue filtrar por endereço IP de origem</button>
+    <button class="opcao" data-ok="1" onclick="resp(this,true)">Examina cada pacote isoladamente, sem o contexto da conexão</button>
+    <button class="opcao" onclick="resp(this,false)">Exige hardware dedicado muito caro</button>
+    <details class="explica"><summary>Ver explicação</summary><div>Por não manter estado, é suscetível a spoofing e não reconhece se um pacote pertence a uma conexão legítima. Desempenho e custo são justamente seus pontos fortes.</div></details>
+  </div>
+  <div class="pergunta"><p class="enunciado">3) [Mód. 9] Qual firewall atua como intermediário, conectando-se aos servidores em nome dos clientes e filtrando até a camada 7?</p>
+    <button class="opcao" onclick="resp(this,false)">Firewall com estado (stateful)</button>
+    <button class="opcao" onclick="resp(this,false)">Firewall transparente</button>
+    <button class="opcao" onclick="resp(this,false)">Firewall de filtragem de pacotes</button>
+    <button class="opcao" data-ok="1" onclick="resp(this,true)">Gateway de aplicação (proxy)</button>
+    <details class="explica"><summary>Ver explicação</summary><div>O proxy intermedia a conexão (cliente→proxy→servidor) e inspeciona o conteúdo da aplicação. O stateful para na camada 5.</div></details>
+  </div>
+  <div class="pergunta"><p class="enunciado">4) [Mód. 9] Em um design com DMZ, qual fluxo de tráfego normalmente é BLOQUEADO?</p>
+    <button class="opcao" onclick="resp(this,false)">De dentro para fora (inside → outside)</button>
+    <button class="opcao" data-ok="1" onclick="resp(this,true)">Da DMZ para a rede interna</button>
+    <button class="opcao" onclick="resp(this,false)">De fora para a DMZ nas portas 80/443</button>
+    <button class="opcao" onclick="resp(this,false)">O retorno de sessões iniciadas internamente</button>
+    <details class="explica"><summary>Ver explicação</summary><div>Se um servidor da DMZ for comprometido, ele não pode alcançar a rede interna — por isso DMZ→inside é bloqueado.</div></details>
+  </div>
+  <div class="pergunta"><p class="enunciado">5) [Mód. 10] Qual é a postura de segurança padrão do ZPF para o tráfego entre zonas diferentes?</p>
+    <button class="opcao" onclick="resp(this,false)">Permitir tudo, a menos que explicitamente bloqueado</button>
+    <button class="opcao" onclick="resp(this,false)">Inspecionar tudo automaticamente</button>
+    <button class="opcao" data-ok="1" onclick="resp(this,true)">Bloquear tudo, a menos que explicitamente permitido</button>
+    <button class="opcao" onclick="resp(this,false)">Registrar tudo sem bloquear</button>
+    <details class="explica"><summary>Ver explicação</summary><div>Entre zonas diferentes vale o "deny all" implícito — só passa o que uma política em um zone-pair permitir.</div></details>
+  </div>
+  <div class="pergunta"><p class="enunciado">6) [Mód. 10] Qual comando coloca a interface G0/0 na zona INSIDE?</p>
+    <button class="opcao" onclick="resp(this,false)"><code>zone security INSIDE</code></button>
+    <button class="opcao" data-ok="1" onclick="resp(this,true)"><code>zone-member security INSIDE</code> (na interface)</button>
+    <button class="opcao" onclick="resp(this,false)"><code>service-policy type inspect INSIDE</code></button>
+    <button class="opcao" onclick="resp(this,false)"><code>ip zone INSIDE</code></button>
+    <details class="explica"><summary>Ver explicação</summary><div><code>zone security</code> cria a zona (modo global); <code>zone-member security</code>, dentro da interface, associa a interface à zona.</div></details>
+  </div>
+  <div class="pergunta"><p class="enunciado">7) [Mód. 10] No ZPF, qual a diferença entre as ações <b>inspect</b> e <b>pass</b>?</p>
+    <button class="opcao" data-ok="1" onclick="resp(this,true)">Inspect é stateful e libera o retorno; pass deixa passar sem estado, em um único sentido</button>
+    <button class="opcao" onclick="resp(this,false)">Pass é stateful; inspect apenas registra em log</button>
+    <button class="opcao" onclick="resp(this,false)">São equivalentes, mudando apenas a sintaxe</button>
+    <button class="opcao" onclick="resp(this,false)">Inspect descarta o tráfego silenciosamente</button>
+    <details class="explica"><summary>Ver explicação</summary><div>Inspect rastreia a sessão (retorno automático). Pass não cria estado — o tráfego de volta precisaria de outra política.</div></details>
+  </div>
+  <div class="pergunta"><p class="enunciado">8) [Mód. 10] Qual é a ordem correta da hierarquia C3PL do ZPF?</p>
+    <button class="opcao" onclick="resp(this,false)">policy-map → zone-pair → class-map</button>
+    <button class="opcao" onclick="resp(this,false)">zone-pair → class-map → policy-map</button>
+    <button class="opcao" data-ok="1" onclick="resp(this,true)">class-map (classifica) → policy-map (ação) → service-policy no zone-pair (aplica)</button>
+    <button class="opcao" onclick="resp(this,false)">access-list → class-map → interface</button>
+    <details class="explica"><summary>Ver explicação</summary><div>Classificar o tráfego, definir o que fazer com ele e aplicar a política na direção origem→destino do zone-pair.</div></details>
+  </div>
+  <div class="pergunta"><p class="enunciado">9) [Mód. 11] Qual é uma DESVANTAGEM do IPS em modo inline?</p>
+    <button class="opcao" onclick="resp(this,false)">Não consegue bloquear o pacote de gatilho</button>
+    <button class="opcao" data-ok="1" onclick="resp(this,true)">Adiciona latência e, se o sensor falhar, pode afetar a rede</button>
+    <button class="opcao" onclick="resp(this,false)">Trabalha apenas com cópias do tráfego</button>
+    <button class="opcao" onclick="resp(this,false)">Não usa assinaturas para detecção</button>
+    <details class="explica"><summary>Ver explicação</summary><div>Estar no caminho do tráfego é a força (bloqueia na hora) e a fraqueza (latência; ponto de falha) do IPS.</div></details>
+  </div>
+  <div class="pergunta"><p class="enunciado">10) [Mód. 11] Por que um IDS não consegue impedir o pacote que disparou o alarme?</p>
+    <button class="opcao" onclick="resp(this,false)">Porque não usa assinaturas</button>
+    <button class="opcao" onclick="resp(this,false)">Porque trabalha apenas na camada 2</button>
+    <button class="opcao" data-ok="1" onclick="resp(this,true)">Porque analisa uma cópia do tráfego — o pacote real já seguiu seu caminho</button>
+    <button class="opcao" onclick="resp(this,false)">Porque depende de ACLs para bloquear</button>
+    <details class="explica"><summary>Ver explicação</summary><div>Em modo promíscuo (offline), o IDS recebe cópia via SPAN. Quando detecta, o original já passou — só restam ações reativas.</div></details>
+  </div>
+  <div class="pergunta"><p class="enunciado">11) [Mód. 11] Para que serve o recurso SPAN de um switch Cisco?</p>
+    <button class="opcao" onclick="resp(this,false)">Bloquear portas que recebam BPDUs</button>
+    <button class="opcao" onclick="resp(this,false)">Criar VLANs dinamicamente</button>
+    <button class="opcao" data-ok="1" onclick="resp(this,true)">Espelhar o tráfego de portas/VLANs de origem para uma porta de destino com um sensor/analisador</button>
+    <button class="opcao" onclick="resp(this,false)">Aumentar a largura de banda agregando portas</button>
+    <details class="explica"><summary>Ver explicação</summary><div>Sem SPAN, o IDS/Wireshark não enxergaria o tráfego dos outros — o switch só encaminha à porta de destino. RSPAN faz o mesmo entre switches.</div></details>
+  </div>
+  <div class="pergunta"><p class="enunciado">12) [Mód. 11] No Snort IPS dos roteadores ISR 4000, qual a diferença entre os modos IDS e IPS?</p>
+    <button class="opcao" data-ok="1" onclick="resp(this,true)">IDS apenas alerta; IPS inspeciona inline e descarta o tráfego malicioso</button>
+    <button class="opcao" onclick="resp(this,false)">IDS bloqueia; IPS apenas registra em log</button>
+    <button class="opcao" onclick="resp(this,false)">IDS usa assinaturas; IPS não usa</button>
+    <button class="opcao" onclick="resp(this,false)">Não há diferença funcional entre os modos</button>
+    <details class="explica"><summary>Ver explicação</summary><div>O mesmo Snort pode operar como sentinela passivo (IDS) ou guarda ativo (IPS), conforme o modo configurado.</div></details>
+  </div>
+  <div class="pergunta"><p class="enunciado">13) [Mód. 14] O que faz a opção <code>sticky</code> do port security?</p>
+    <button class="opcao" onclick="resp(this,false)">Desliga a porta após qualquer violação</button>
+    <button class="opcao" data-ok="1" onclick="resp(this,true)">Aprende os MACs dinamicamente e os grava na running-config</button>
+    <button class="opcao" onclick="resp(this,false)">Limita a taxa de pacotes DHCP por segundo</button>
+    <button class="opcao" onclick="resp(this,false)">Impede a porta de negociar trunk</button>
+    <details class="explica"><summary>Ver explicação</summary><div>Sticky = aprende e "cola": os MACs aprendidos viram entradas de configuração (se salvar com copy run start, sobrevivem ao reboot).</div></details>
+  </div>
+  <div class="pergunta"><p class="enunciado">14) [Mód. 14] Qual modo de violação do port security descarta quadros desconhecidos, GERA log, mas NÃO desliga a porta?</p>
+    <button class="opcao" onclick="resp(this,false)">protect</button>
+    <button class="opcao" data-ok="1" onclick="resp(this,true)">restrict</button>
+    <button class="opcao" onclick="resp(this,false)">shutdown</button>
+    <button class="opcao" onclick="resp(this,false)">err-disable</button>
+    <details class="explica"><summary>Ver explicação</summary><div>protect = silencioso; restrict = descarta + loga/incrementa contador; shutdown (padrão) = derruba a porta (err-disabled).</div></details>
+  </div>
+  <div class="pergunta"><p class="enunciado">15) [Mód. 14] O ataque de double-tagging (dupla marcação 802.1Q) explora o quê?</p>
+    <button class="opcao" onclick="resp(this,false)">A tabela de binding do DHCP snooping</button>
+    <button class="opcao" onclick="resp(this,false)">O endereço MAC da root bridge</button>
+    <button class="opcao" data-ok="1" onclick="resp(this,true)">A VLAN nativa do trunk, cuja tag externa é removida pelo primeiro switch</button>
+    <button class="opcao" onclick="resp(this,false)">A fragmentação de pacotes IP</button>
+    <details class="explica"><summary>Ver explicação</summary><div>Por isso a mitigação inclui usar uma VLAN nativa dedicada (não usada por hosts). O ataque é unidirecional e exige que o atacante esteja na VLAN nativa.</div></details>
+  </div>
+  <div class="pergunta"><p class="enunciado">16) [Mód. 14] Com DHCP snooping ativo, o que acontece com um DHCP OFFER que chega por uma porta NÃO confiável?</p>
+    <button class="opcao" data-ok="1" onclick="resp(this,true)">É descartado — mensagens de servidor só são aceitas em portas confiáveis</button>
+    <button class="opcao" onclick="resp(this,false)">É encaminhado com prioridade reduzida</button>
+    <button class="opcao" onclick="resp(this,false)">É registrado na binding table e encaminhado</button>
+    <button class="opcao" onclick="resp(this,false)">Causa o desligamento imediato da porta</button>
+    <details class="explica"><summary>Ver explicação</summary><div>OFFER/ACK são mensagens de servidor. Vindo de porta untrusted = servidor falso (rogue) → drop. Isso mata o DHCP spoofing.</div></details>
+  </div>
+  <div class="pergunta"><p class="enunciado">17) [Mód. 14] Qual recurso usa a binding table do DHCP snooping para validar o IP/MAC de ORIGEM dos pacotes em cada porta?</p>
+    <button class="opcao" onclick="resp(this,false)">DAI (Dynamic ARP Inspection)</button>
+    <button class="opcao" onclick="resp(this,false)">BPDU Guard</button>
+    <button class="opcao" onclick="resp(this,false)">Root Guard</button>
+    <button class="opcao" data-ok="1" onclick="resp(this,true)">IP Source Guard (IPSG)</button>
+    <details class="explica"><summary>Ver explicação</summary><div>O IPSG combate spoofing de endereço validando os pacotes de dados; o DAI valida pacotes ARP (também via binding table).</div></details>
+  </div>
+  <div class="pergunta"><p class="enunciado">18) [Mód. 15] Qual elemento das comunicações seguras impede que o remetente NEGUE ter enviado a mensagem?</p>
+    <button class="opcao" onclick="resp(this,false)">Confidencialidade</button>
+    <button class="opcao" onclick="resp(this,false)">Integridade</button>
+    <button class="opcao" data-ok="1" onclick="resp(this,true)">Não repúdio</button>
+    <button class="opcao" onclick="resp(this,false)">Disponibilidade</button>
+    <details class="explica"><summary>Ver explicação</summary><div>Não repúdio é obtido com assinatura digital: só o dono da chave privada poderia ter assinado, então não dá para negar depois.</div></details>
+  </div>
+  <div class="pergunta"><p class="enunciado">19) [Mód. 15] A cifra de Vigenère é classificada como:</p>
+    <button class="opcao" onclick="resp(this,false)">Cifra de transposição</button>
+    <button class="opcao" data-ok="1" onclick="resp(this,true)">Cifra de substituição polialfabética</button>
+    <button class="opcao" onclick="resp(this,false)">One-time pad</button>
+    <button class="opcao" onclick="resp(this,false)">Cifra de bloco moderna</button>
+    <details class="explica"><summary>Ver explicação</summary><div>Usa uma palavra-chave para alternar entre vários alfabetos de substituição — mais forte que César (monoalfabética), mas quebrável.</div></details>
+  </div>
+  <div class="pergunta"><p class="enunciado">20) [Mód. 15] No método de criptoanálise "known-plaintext" (texto claro conhecido), o atacante possui:</p>
+    <button class="opcao" onclick="resp(this,false)">Apenas o texto cifrado</button>
+    <button class="opcao" data-ok="1" onclick="resp(this,true)">Amostras de texto claro E o texto cifrado correspondente</button>
+    <button class="opcao" onclick="resp(this,false)">A chave privada do destinatário</button>
+    <button class="opcao" onclick="resp(this,false)">Acesso físico ao dispositivo de cifragem</button>
+    <details class="explica"><summary>Ver explicação</summary><div>Com pares claro↔cifrado, ele procura deduzir a chave. Em "chosen-plaintext", além disso, ele ESCOLHE o texto a ser cifrado.</div></details>
+  </div>
+  <div class="pergunta"><p class="enunciado">21) [Mód. 16] Qual propriedade é essencial em uma função de hash criptográfica?</p>
+    <button class="opcao" onclick="resp(this,false)">Ser reversível com a chave correta</button>
+    <button class="opcao" data-ok="1" onclick="resp(this,true)">Ser unidirecional — inviável recuperar a entrada a partir do resumo</button>
+    <button class="opcao" onclick="resp(this,false)">Produzir saídas de tamanho variável conforme a entrada</button>
+    <button class="opcao" onclick="resp(this,false)">Usar um par de chaves pública/privada</button>
+    <details class="explica"><summary>Ver explicação</summary><div>Hash não é criptografia: não tem chave e não pode ser revertido. Mesma entrada → mesmo digest de tamanho fixo; mudou 1 bit → digest completamente diferente.</div></details>
+  </div>
+  <div class="pergunta"><p class="enunciado">22) [Mód. 16] Por que o HMAC protege contra um atacante man-in-the-middle que um hash simples não protege?</p>
+    <button class="opcao" onclick="resp(this,false)">Porque o HMAC usa um digest maior</button>
+    <button class="opcao" data-ok="1" onclick="resp(this,true)">Porque sem a chave secreta o atacante não consegue recalcular um resumo válido</button>
+    <button class="opcao" onclick="resp(this,false)">Porque o HMAC criptografa a mensagem inteira</button>
+    <button class="opcao" onclick="resp(this,false)">Porque o HMAC é transmitido por um canal separado</button>
+    <details class="explica"><summary>Ver explicação</summary><div>Com hash puro, o MITM altera a mensagem e recalcula o hash. Com HMAC, o cálculo exige a chave secreta compartilhada — que ele não tem.</div></details>
+  </div>
+  <div class="pergunta"><p class="enunciado">23) [Mód. 16] Qual alternativa lista corretamente algoritmos SIMÉTRICOS e ASSIMÉTRICOS, nessa ordem?</p>
+    <button class="opcao" onclick="resp(this,false)">RSA e DH | AES e 3DES</button>
+    <button class="opcao" onclick="resp(this,false)">SHA-256 e MD5 | AES e RSA</button>
+    <button class="opcao" data-ok="1" onclick="resp(this,true)">AES e 3DES | RSA e Diffie-Hellman</button>
+    <button class="opcao" onclick="resp(this,false)">AES e RSA | 3DES e DH</button>
+    <details class="explica"><summary>Ver explicação</summary><div>Simétricos: DES, 3DES, AES, SEAL, RC. Assimétricos: RSA, DH, ElGamal, ECC. (SHA/MD5 são hashes, não cifras!)</div></details>
+  </div>
+  <div class="pergunta"><p class="enunciado">24) [Mód. 16] Dois roteadores precisam estabelecer uma chave secreta comum através da Internet, sem nunca transmiti-la. Qual algoritmo resolve isso?</p>
+    <button class="opcao" onclick="resp(this,false)">AES-256</button>
+    <button class="opcao" onclick="resp(this,false)">SHA-256</button>
+    <button class="opcao" data-ok="1" onclick="resp(this,true)">Diffie-Hellman</button>
+    <button class="opcao" onclick="resp(this,false)">3DES</button>
+    <details class="explica"><summary>Ver explicação</summary><div>DH é troca/acordo de chaves: cada lado combina seu segredo com o valor público do outro e ambos chegam à mesma chave. Usado pelo IKE no IPsec.</div></details>
+  </div>
+  <div class="pergunta"><p class="enunciado">25) [Mód. 17] Como é criada uma assinatura digital?</p>
+    <button class="opcao" onclick="resp(this,false)">Cifrando a mensagem inteira com a chave pública do destinatário</button>
+    <button class="opcao" data-ok="1" onclick="resp(this,true)">Gerando o hash da mensagem e cifrando-o com a chave PRIVADA do remetente</button>
+    <button class="opcao" onclick="resp(this,false)">Gerando um HMAC com chave compartilhada</button>
+    <button class="opcao" onclick="resp(this,false)">Cifrando o hash com a chave pública do remetente</button>
+    <details class="explica"><summary>Ver explicação</summary><div>Hash + chave privada = assinatura. Quem verifica decifra com a chave pública do remetente e compara com o hash recalculado.</div></details>
+  </div>
+  <div class="pergunta"><p class="enunciado">26) [Mód. 17] Qual é a função de um certificado digital X.509?</p>
+    <button class="opcao" onclick="resp(this,false)">Armazenar a chave privada do usuário com segurança</button>
+    <button class="opcao" onclick="resp(this,false)">Cifrar o tráfego entre cliente e servidor</button>
+    <button class="opcao" data-ok="1" onclick="resp(this,true)">Vincular uma identidade a uma chave pública, com a garantia (assinatura) de uma CA</button>
+    <button class="opcao" onclick="resp(this,false)">Substituir a necessidade de senhas no sistema</button>
+    <details class="explica"><summary>Ver explicação</summary><div>O certificado responde "essa chave pública pertence mesmo a quem diz?". Quem garante é a CA, assinando o certificado.</div></details>
+  </div>
+  <div class="pergunta"><p class="enunciado">27) [Mód. 17] Qual mecanismo permite verificar EM TEMPO REAL se um certificado foi revogado?</p>
+    <button class="opcao" onclick="resp(this,false)">CRL (lista baixada periodicamente)</button>
+    <button class="opcao" data-ok="1" onclick="resp(this,true)">OCSP (consulta online do status do certificado)</button>
+    <button class="opcao" onclick="resp(this,false)">CSR (Certificate Signing Request)</button>
+    <button class="opcao" onclick="resp(this,false)">DH (Diffie-Hellman)</button>
+    <details class="explica"><summary>Ver explicação</summary><div>A CRL é uma lista estática baixada de tempos em tempos; o OCSP consulta o status de um certificado específico na hora.</div></details>
+  </div>
+  <div class="pergunta"><p class="enunciado">28) [Mód. 18] Qual característica define uma VPN site-a-site?</p>
+    <button class="opcao" onclick="resp(this,false)">Cada usuário executa um cliente VPN no notebook</button>
+    <button class="opcao" data-ok="1" onclick="resp(this,true)">Os gateways das duas redes criam e mantêm o túnel; os hosts internos nem percebem</button>
+    <button class="opcao" onclick="resp(this,false)">Só funciona dentro da mesma cidade</button>
+    <button class="opcao" onclick="resp(this,false)">Dispensa criptografia, pois usa a rede do provedor</button>
+    <details class="explica"><summary>Ver explicação</summary><div>Site-a-site = rede↔rede, túnel permanente entre gateways. Acesso remoto = usuário↔rede, túnel sob demanda via cliente (ex.: AnyConnect).</div></details>
+  </div>
+  <div class="pergunta"><p class="enunciado">29) [Mód. 18] Sobre os protocolos do IPsec, é correto afirmar:</p>
+    <button class="opcao" onclick="resp(this,false)">AH criptografa os dados; ESP apenas autentica</button>
+    <button class="opcao" onclick="resp(this,false)">Ambos criptografam, mas o AH é mais rápido</button>
+    <button class="opcao" data-ok="1" onclick="resp(this,true)">ESP fornece confidencialidade + integridade + autenticação; AH não criptografa</button>
+    <button class="opcao" onclick="resp(this,false)">ESP usa a porta TCP 443</button>
+    <details class="explica"><summary>Ver explicação</summary><div>AH (protocolo IP 51) só autentica/integridade. ESP (protocolo IP 50) também cifra — por isso domina nas VPNs reais.</div></details>
+  </div>
+  <div class="pergunta"><p class="enunciado">30) [Mód. 18] Qual é o papel da Fase 1 do IKE?</p>
+    <button class="opcao" onclick="resp(this,false)">Negociar as SAs IPsec que protegerão os dados do usuário</button>
+    <button class="opcao" data-ok="1" onclick="resp(this,true)">Estabelecer um canal seguro inicial (túnel ISAKMP) e autenticar os pares</button>
+    <button class="opcao" onclick="resp(this,false)">Transmitir os dados já criptografados</button>
+    <button class="opcao" onclick="resp(this,false)">Distribuir certificados digitais aos clientes</button>
+    <details class="explica"><summary>Ver explicação</summary><div>Fase 1 = canal de gerência seguro + autenticação dos pares (com DH). Fase 2 = negocia as SAs IPsec que protegem o tráfego real.</div></details>
+  </div>
+</section>
+
 <footer style="text-align:center; color:var(--muted); font-size:.85rem; padding:20px 0;">
   Guia de estudo gerado para revisão pessoal — baseado na estrutura do curso <i>Network Security 1.0</i> (Cisco Networking Academy).<br>
   Bons estudos, Rafael! 🚀
@@ -1164,6 +1386,24 @@ deuBtn.addEventListener('click', () => {
 let deuSalvo = null;
 try{ deuSalvo = localStorage.getItem('deutera'); }catch(e){}
 if(deuSalvo === '1') setDeutera(true);
+// Placar do simulado (conta só a 1ª tentativa de cada questão)
+const simPerguntas = document.querySelectorAll('#simulado .pergunta');
+let simRespondidas = 0, simAcertos = 0;
+simPerguntas.forEach(p => {
+  let jaRespondeu = false;
+  p.querySelectorAll('.opcao').forEach(o => o.addEventListener('click', () => {
+    if(jaRespondeu) return;
+    jaRespondeu = true;
+    simRespondidas++;
+    if(o.dataset.ok === '1') simAcertos++;
+    const placar = document.getElementById('sim-placar');
+    placar.textContent = 'Respondidas: ' + simRespondidas + '/' + simPerguntas.length + ' · Acertos: ' + simAcertos;
+    if(simRespondidas === simPerguntas.length){
+      const pct = Math.round(simAcertos / simPerguntas.length * 100);
+      placar.textContent += ' (' + pct + '%) — ' + (pct >= 80 ? '🏆 Mandou bem!' : pct >= 60 ? '👍 Quase lá, revise os erros' : '📖 Bora revisar os módulos');
+    }
+  }));
+});
 // Quiz
 function resp(btn, certa){
   const irmaos = btn.parentElement.querySelectorAll('.opcao');
