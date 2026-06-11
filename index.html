@@ -185,6 +185,7 @@
   <div class="secao">Apoio</div>
   <a href="#glossario">Glossário rápido</a>
   <a href="#simulado">🎯 Simulado final — 30 questões</a>
+  <a href="#prova-passada">📄 Prova resolvida (2º Bi)</a>
 </nav>
 
 <main>
@@ -1322,6 +1323,96 @@
     <button class="opcao" onclick="resp(this,false)">Distribuir certificados digitais aos clientes</button>
     <details class="explica"><summary>Ver explicação</summary><div>Fase 1 = canal de gerência seguro + autenticação dos pares (com DH). Fase 2 = negocia as SAs IPsec que protegem o tráfego real.</div></details>
   </div>
+</section>
+
+<section class="modulo" id="prova-passada" style="border-top:5px solid #9a7b1e;">
+  <span class="mod-tag" style="background:#9a7b1e;">Prova resolvida</span>
+  <h2>📄 Prova do 2º Bimestre (ano anterior) — gabarito comentado</h2>
+  <p class="objetivo">Resolução comentada da prova Cyber_Prova2Bi: 6 questões objetivas (0,5 cada) + 2 discursivas (1,5 cada) = 6,0 pontos. Ao lado de cada questão, o módulo do guia para revisar.</p>
+
+  <div class="box prova"><b class="titulo">Questão 1 (0,5) — modelo ENADE · revise o Mód. 16</b>
+    <p><b>Enunciado:</b> A Figura 1 (Kurose, 5ª ed.) mostra um esquema de envio seguro: na origem, a mensagem <i>m</i> é concatenada com um segredo compartilhado <i>s</i> e passa por uma função de hash, gerando <i>H(m+s)</i>, que é anexado à mensagem e enviado pela Internet. No destino, o receptor (que também conhece <i>s</i>) recalcula <i>H(m+s)</i> e compara com o valor recebido. O esquema fornece:</p>
+    <p>(A) apenas não repúdio<br>
+    (B) apenas integridade da mensagem<br>
+    (C) integridade da mensagem e não repúdio<br>
+    (D) autenticação do remetente e não repúdio<br>
+    <b>✔ (E) autenticação do remetente e integridade da mensagem — CORRETA</b></p>
+    <details class="explica"><summary>Por quê?</summary><div>O esquema é exatamente o <b>HMAC</b> (hash + segredo compartilhado). Se o hash recebido bate com o recalculado: a mensagem não foi alterada (<b>integridade</b>) e só quem conhece <i>s</i> poderia tê-lo gerado (<b>autenticação da origem</b>). <b>Não há não repúdio</b>: como o segredo é compartilhado entre os dois, qualquer um deles poderia ter criado a mensagem — não dá para provar a um terceiro quem foi. Não repúdio exige <b>assinatura digital com chave privada</b> (Mód. 17).</div></details>
+  </div>
+
+  <div class="box prova"><b class="titulo">Questão 2 (0,5) — regras do ZPF · revise o Mód. 10</b>
+    <p><b>Enunciado:</b> Qual alternativa descreve uma das regras que regem o comportamento da interface na implementação de um firewall de política baseada em zona?</p>
+    <p>(A) Um administrador pode atribuir interfaces a zonas, independentemente de a zona ter sido configurada<br>
+    (B) Por padrão, o tráfego pode fluir entre uma interface membro de zona e qualquer interface que não seja membro<br>
+    (C) Um administrador pode atribuir uma interface a várias zonas de segurança<br>
+    (D) Todo o tráfego que flui através de uma determinada interface está sujeito à mesma inspeção<br>
+    <b>✔ (E) Por padrão, o tráfego pode fluir entre interfaces que são membros da mesma zona — CORRETA</b></p>
+    <details class="explica"><summary>Por quê?</summary><div>É a linha 4 da tabela de operação do ZPF: <b>mesma zona = passa</b>. As erradas: (A) a zona precisa <b>existir antes</b> de receber interfaces; (B) membro ↔ não-membro = <b>DROP</b> (linhas 2 e 3 da tabela); (C) uma interface pertence a <b>uma única zona</b>; (D) é o modelo clássico por interface — no ZPF a política é por <b>par de zonas</b>, não por interface.</div></details>
+  </div>
+
+  <div class="box prova"><b class="titulo">Questão 3 (0,5) — IPS × IDS · revise o Mód. 11</b>
+    <p><b>Enunciado:</b> Qual vantagem pode ser atribuída ao utilizar um IPS em vez de um IDS?</p>
+    <p>(A) Não ocorrem falsos positivos<br>
+    <b>✔ (B) Capacidade de resposta automática, bloqueando o tráfego malicioso — CORRETA</b><br>
+    (C) Não tem impacto no desempenho da rede<br>
+    (D) Menor custo de implementação<br>
+    (E) Em caso de falha no sensor, a operação da rede não é afetada</p>
+    <details class="explica"><summary>Por quê?</summary><div>O IPS é <b>inline</b>: bloqueia o tráfego malicioso na hora, inclusive o pacote de gatilho. As alternativas (C) e (E) são vantagens do <b>IDS</b> (modo promíscuo, fora do caminho) — pegadinha clássica de inversão. Falsos positivos (A) ocorrem em ambos.</div></details>
+  </div>
+
+  <div class="box prova"><b class="titulo">Questão 4 (0,5) — ARP Spoofing · revise o Mód. 14</b>
+    <p><b>Enunciado:</b> Qual das opções a seguir é requerida para proteger a rede contra ataques de ARP Spoofing?</p>
+    <p>(A) ACL (Access Control List)<br>
+    (B) DTP (Dynamic Trunk Protocol)<br>
+    <b>✔ (C) DHCP Snooping — CORRETA</b><br>
+    (D) Port Mirroring<br>
+    (E) PortFast e BPDU Guard</p>
+    <details class="explica"><summary>Por quê?</summary><div>A defesa direta contra ARP spoofing é a <b>DAI (Dynamic ARP Inspection)</b> — que não está entre as opções. Mas a DAI <b>depende</b> da tabela de associação (binding table) construída pelo <b>DHCP Snooping</b>: sem ele, a DAI não tem contra o que validar. Por isso o DHCP Snooping é <b>requerido</b> ✔. As demais: DTP é justamente um vetor de ataque de VLAN, Port Mirroring (SPAN) é para monitoramento, PortFast/BPDU Guard protegem o STP.</div></details>
+  </div>
+
+  <div class="box prova"><b class="titulo">Questão 5 (0,5) — Inundação da tabela MAC · revise o Mód. 14</b>
+    <p><b>Enunciado:</b> Um analista precisa implementar mitigação contra ataques de inundação da tabela MAC dos switches. Para isso, ele deverá:</p>
+    <p>(A) habilitar o firewall para controlar os endereços MAC que entram no switch<br>
+    <b>✔ (B) ativar o port security para limitar o número de endereços MAC em cada porta — CORRETA</b><br>
+    (C) executar varreduras de rede periodicamente<br>
+    (D) implementar um sistema de prevenção de intrusão (IPS)<br>
+    (E) utilizar o recurso SPAN (Switch Port Analyzer) do switch</p>
+    <details class="explica"><summary>Por quê?</summary><div>MAC flooding enche a tabela CAM com MACs falsos até o switch inundar tudo (virar "hub"). O <b>port security</b> limita quantos MACs cada porta pode aprender — mata o ataque na origem. Firewall/IPS atuam nas camadas 3+; SPAN só espelha tráfego para análise.</div></details>
+  </div>
+
+  <div class="box prova"><b class="titulo">Questão 6 (0,5) — ENADE 2021 (WhatsApp) · revise os Mód. 15, 16 e 17</b>
+    <p><b>Enunciado (resumo):</b> Texto do WhatsApp sobre criptografia de ponta a ponta ("cada mensagem tem um cadeado e uma chave únicos"). Avalie as afirmações:</p>
+    <div class="tabela-wrap"><table>
+      <tr><th>Afirmação</th><th>V/F</th><th>Comentário</th></tr>
+      <tr><td><b>I.</b> Com a chave pública do remetente armazenada no servidor, é possível verificar a autenticidade de uma mensagem recebida</td><td><b>V</b></td><td>Autenticidade = assinatura feita com a chave <b>privada</b> do remetente, verificada com a <b>pública</b> dele (obtida do servidor)</td></tr>
+      <tr><td><b>II.</b> Vetor de inicialização (IV) variável para compor chaves diferentes a cada mensagem oculta padrões e dificulta ataques de reprodução (replay)</td><td><b>V</b></td><td>IV variável ➜ mesmo conteúdo gera cifrados diferentes ➜ sem padrões e sem reuso</td></tr>
+      <tr><td><b>III.</b> O uso de AES indica criptografia simétrica, "isto é, aquela que utiliza um par de chaves, uma para encriptar e outra para decriptar"</td><td><b>F</b></td><td>AES <b>é</b> simétrico, mas a descrição dada (par de chaves distintas) é de criptografia <b>ASSIMÉTRICA</b> — pegadinha na definição!</td></tr>
+      <tr><td><b>IV.</b> A presença do SHA-256 sugere verificação de integridade, comparando hashes da mensagem enviada e recebida</td><td><b>V</b></td><td>Exatamente a função do hash (Mód. 16)</td></tr>
+    </table></div>
+    <p><b>✔ Resposta: (E) I, II e IV — CORRETA</b></p>
+    <details class="explica"><summary>Dica de prova</summary><div>Em questões V/F sobre criptografia, leia a <b>definição</b> com lupa: o examinador adora colocar o algoritmo certo com a definição do paradigma errado (como na III: AES com definição de assimétrica).</div></details>
+  </div>
+
+  <div class="box prova"><b class="titulo">Questão 7 (1,5) — VPN e IPsec (discursiva) · revise o Mód. 18</b>
+    <p><b>a) (0,75)</b> Funcionário em viagem, na internet do hotel, precisa acessar documentos da empresa. Que tipo de VPN é utilizada?</p>
+    <div class="dica"><b class="titulo">✔ Resposta modelo</b>
+    <b>VPN de acesso remoto</b> (remote-access): o túnel é criado <b>sob demanda</b> entre o dispositivo do usuário e o gateway VPN da empresa, usando um cliente VPN (ex.: Cisco AnyConnect/Secure Client, com IPsec ou SSL/TLS) ou acesso clientless via navegador (HTTPS). <i>Não</i> é site-a-site: não há duas redes fixas interligadas — é usuário ➜ rede.</div>
+    <p><b>b) (0,75)</b> Em uma VPN que utiliza IPsec, quais funções de segurança podem ser fornecidas?</p>
+    <div class="dica"><b class="titulo">✔ Resposta modelo</b>
+    O framework IPsec fornece: <b>1) Confidencialidade</b> — criptografia dos dados (DES/3DES/AES/SEAL); <b>2) Integridade</b> — hash/HMAC (MD5/SHA) garante que o pacote não foi alterado; <b>3) Autenticação da origem</b> — PSK ou certificados RSA autenticam os pares; <b>4) Troca segura de chaves</b> — Diffie-Hellman estabelece o segredo por canal público; e ainda proteção <b>anti-replay</b> (números de sequência impedem reinjeção de pacotes capturados).</div>
+  </div>
+
+  <div class="box prova"><b class="titulo">Questão 8 (1,5) — Certificado SSL/HTTPS (discursiva) · revise o Mód. 17</b>
+    <p><b>a) (0,75)</b> Explique o procedimento para o navegador validar o certificado e autenticar o servidor HTTPS.</p>
+    <div class="dica"><b class="titulo">✔ Resposta modelo</b>
+    O navegador: <b>1)</b> verifica a <b>assinatura digital do certificado</b> usando a chave pública da <b>CA emissora</b>, subindo a <b>cadeia de confiança</b> até uma CA raiz presente no repositório confiável do navegador/SO; <b>2)</b> confere o <b>período de validade</b>; <b>3)</b> confere se o <b>nome do domínio</b> acessado corresponde ao do certificado (CN/SAN); <b>4)</b> verifica se o certificado <b>não foi revogado</b> (CRL ou OCSP). Se tudo passa, o servidor está autenticado: a identidade dele está vinculada àquela chave pública por uma autoridade confiável.</div>
+    <p><b>b) (0,75)</b> Validado o certificado, o que está incluído nele e é utilizado nas comunicações futuras entre cliente e servidor?</p>
+    <div class="dica"><b class="titulo">✔ Resposta modelo</b>
+    A <b>chave pública do servidor</b>. O cliente a utiliza na <b>troca de chaves</b> (cifrar o segredo pré-mestre ou validar a troca Diffie-Hellman), e a partir daí ambos derivam <b>chaves simétricas de sessão</b> que cifram todo o tráfego — o modelo híbrido: assimétrica para combinar a chave, simétrica (rápida) para os dados.</div>
+  </div>
+
+  <div class="atencao"><b class="titulo">⚠️ Mapa da prova ➜ onde revisar</b>
+  Q1 = HMAC (Mód. 16) · Q2 = regras do ZPF (Mód. 10) · Q3 = IPS×IDS (Mód. 11) · Q4 e Q5 = ataques de camada 2 (Mód. 14) · Q6 = simétrica×assimétrica, hash (Mód. 15–17) · Q7 = VPNs/IPsec (Mód. 18) · Q8 = PKI/certificados (Mód. 17). Repare: <b>a prova inteira está coberta pelos módulos deste guia</b> — os tópicos campeões são camada 2, criptografia e a tabela do ZPF.</div>
 </section>
 
 <footer style="text-align:center; color:var(--muted); font-size:.85rem; padding:20px 0;">
